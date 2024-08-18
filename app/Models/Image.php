@@ -14,6 +14,7 @@ class Image extends Model
         'establishment_id',
         'name',
         'path',
+        'is_cover',
     ];
 
     public function establishment()
