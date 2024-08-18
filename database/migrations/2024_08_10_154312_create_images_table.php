@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('establishment_id');
             $table->string('name');
             $table->string('path');
+            $table->boolean('is_cover')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

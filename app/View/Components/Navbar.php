@@ -8,12 +8,25 @@ use Illuminate\View\Component;
 
 class Navbar extends Component
 {
+    public $navbarItems;
+
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        //
+        $this->navbarItems = [
+            (object) [
+                'name' => 'Home',
+                'routeName' => 'dashboard',
+                'extraClass' => ''
+            ],
+            (object) [
+                'name' => 'Help',
+                'routeName' => 'help',
+                'extraClass' => ''
+            ],
+        ];
     }
 
     /**
