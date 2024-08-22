@@ -20,7 +20,7 @@ class NavLink extends Component
         public $extraClass = '',
     )
     {
-        $this->activeClass = (Route::currentRouteName() == $routeName) ? 'text-blue-500 focus:outline-none' : 'text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400';
+        $this->activeClass = (Route::currentRouteName() == $routeName) ? 'text-blue-500 focus:outline-none' : 'text-gray-800 hover:text-gray-200 focus:outline-none focus:text-white';
     }
 
     /**

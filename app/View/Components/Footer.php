@@ -6,17 +6,12 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class ItemCard extends Component
+class Footer extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(
-        public $name,
-        public $description,
-        public $urlPath,
-        public $imagePath = '',
-    )
+    public function __construct()
     {
         //
     }
@@ -26,6 +21,6 @@ class ItemCard extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.item-card');
+        return view('components.footer');
     }
 }

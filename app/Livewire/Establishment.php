@@ -8,7 +8,7 @@ use Livewire\Component;
 class Establishment extends Component
 {
     public $establishments;
-    public $userType = 'client';
+    public $userType = 'guest';
 
     public function render()
     {

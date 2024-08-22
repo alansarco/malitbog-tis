@@ -19,7 +19,7 @@ class EstablishmentSeeder extends Seeder
         $user = User::where('username', 'owner1')->first();
 
         $establishment = Establishment::create([
-            'name' => 'Prestigious',
+            'name' => 'Establishment1',
             'owner_id' => $user->id,
             'address' => 'Malitbog, Southern Leyte',
             'description' => 'Most Respected Establishment',
@@ -54,7 +54,7 @@ class EstablishmentSeeder extends Seeder
         $user2 = User::where('username', 'owner2')->first();
 
         Establishment::create([
-            'name' => 'Prestigious 3',
+            'name' => 'Most Visited',
             'owner_id' => $user2->id,
             'address' => 'Malitbog, Southern Leyte',
             'description' => 'Most Respected Establishment 3',

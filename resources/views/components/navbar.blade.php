@@ -1,11 +1,12 @@
-<header class="relative flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm py-3 shadow mb-2 ">
+<header class="relative flex flex-wrap sm:justify-start sm:flex-nowrap w-full text-sm py-3 shadow backdrop-blur-sm saturate-200 bg-gray-800/84">
     <nav class="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between">
         <div class="flex items-center justify-between">
             <a class="flex-none text-xl font-semibold focus:outline-none focus:opacity-80" href="#"
                 aria-label="Brand">
-                <span class="inline-flex items-center gap-x-2 text-xl font-semibold">
+                <span class="inline-flex items-center gap-x-2 text-xl font-semibold {{ (Route::currentRouteName() == 'dashboard') ? 'text-white' : 'text-black' }}">
                     <img class="w-10 h-auto" src="../assets/img/logo/logo-short.png" alt="Logo">
-                    {{ env('APP_NAME', 'TIS') }}
+                    {{-- {{ env('APP_NAME', 'TIS') }} --}}
+                    MALITBOG TOURISM
                 </span>
             </a>
             <div class="sm:hidden">
