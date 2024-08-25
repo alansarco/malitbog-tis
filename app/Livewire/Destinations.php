@@ -67,10 +67,8 @@ class Destinations extends Component
                 $query->join('reviews', 'establishments.id', '=', 'reviews.establishment_id')
                     ->whereNull('reviews.deleted_at')
                     ->groupBy('establishments.id')
-                    ->havingRaw('AVG(reviews.rate) >= ?', [$this->filterRate]);
-            })
-            ->when(!empty($this->filterRate), function ($query) {
-                $query->selectRaw('establishments.*, AVG(reviews.rate) as avg_rate');
+                    ->havingRaw('AVG(reviews.rate) >= ?', [$this->filterRate])
+                    ->selectRaw('establishments.*, AVG(reviews.rate) as avg_rate');
             })
             ->groupBy('establishments.id')
             ->get();
