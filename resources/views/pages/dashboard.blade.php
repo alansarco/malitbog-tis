@@ -6,12 +6,13 @@
 
 @section('content')
     {{-- <livewire:establishment /> --}}
+    <x-sidebar />
 
-    <div class="flex flex-col">
-        <x-navbar />
-        <x-hero-section />
-        <x-feature-destinations />
-        <x-footer />
-    </div>
+  <!-- Content -->
+  <div class="w-full pt-10 px-4 sm:px-6 md:px-8 lg:ps-72">
+    dsadsadsa
+  </div>
+  <!-- End Content -->
+  <!-- ========== END MAIN CONTENT ========== -->
 
 @endsection

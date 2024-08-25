@@ -9,8 +9,8 @@
         </div>
     </div>
     <!-- Truncated Description -->
-    <p class="text-gray-600 text-sm mt-2">
-        {{ $description }}
-        <a href="{{ $urlPath }}" class="text-orange-500 hover:underline">See More</a>
+    <p class="text-gray-600 text-sm mt-2 max-w-xs truncate">
+        <span class="truncate">{{ $description }}</span>
     </p>
+    <a href="{{ $urlPath }}" class="text-orange-500 hover:underline">See More</a>
 </div>

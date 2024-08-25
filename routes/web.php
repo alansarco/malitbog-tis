@@ -6,8 +6,8 @@ use App\Livewire\OrganizationInformation;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('pages.dashboard');
-})->name('dashboard');
+    return view('pages.home');
+})->name('home');
 
 Route::get('/destinations', Destinations::class)->name('destinations');
 
@@ -16,3 +16,8 @@ Route::get('/help', function () {
 })->name('help');
 
 Route::get('/establishments/{establishment}', EstablishmentInformation::class)->name('establishment.show');
+
+
+Route::get('/dashboard', function () {
+    return view('pages.dashboard');
+})->name('dashboard');

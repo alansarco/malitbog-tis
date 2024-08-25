@@ -18,7 +18,7 @@ class Navbar extends Component
         $this->navbarItems = [
             (object) [
                 'name' => 'Home',
-                'routeName' => 'dashboard',
+                'routeName' => 'home',
                 'extraClass' => ''
             ],
             (object) [

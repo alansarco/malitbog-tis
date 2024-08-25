@@ -3,7 +3,7 @@
     role="dialog" tabindex="-1" aria-label="Sidebar">
     <div class="px-6">
         <a class="flex-none font-semibold text-xl text-black focus:outline-none focus:opacity-80 dark:text-white"
-            href="#" aria-label="Brand">Brand</a>
+            href="{{ route('dashboard') }}" aria-label="Brand">{{ env('APP_NAME') }}</a>
     </div>
     <nav class="hs-accordion-group p-6 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
         <ul class="space-y-1.5">
