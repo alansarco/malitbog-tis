@@ -16,6 +16,7 @@ class ItemCard extends Component
         public $description,
         public $urlPath,
         public $imagePath = '',
+        public $rating = 0
     )
     {
         //

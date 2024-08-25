@@ -1,3 +1,3 @@
-<a class="font-medium {{ $activeClass }} {{ $extraClass }}" href="{{ route($routeName) }}" aria-current="page">
+<a class="font-medium {{ $extraClass }} hover:text-orange-500" href="{{ route($routeName) }}" aria-current="page">
     {{ $name }}
 </a>

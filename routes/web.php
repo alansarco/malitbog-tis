@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Destinations;
+use App\Livewire\EstablishmentInformation;
 use App\Livewire\OrganizationInformation;
 use Illuminate\Support\Facades\Route;
 
@@ -14,4 +15,4 @@ Route::get('/help', function () {
     return view('pages.help');
 })->name('help');
 
-Route::get('/establishments/{establishment}', OrganizationInformation::class)->name('establishment.show');
+Route::get('/establishments/{establishment}', EstablishmentInformation::class)->name('establishment.show');

@@ -50,6 +50,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function fullName()
+    {
+        return $this->last_name  . ', '. $this->first_name;
+    }
+
     public function role()
     {
         return $this->belongsTo(Role::class);

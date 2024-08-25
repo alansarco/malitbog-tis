@@ -6,12 +6,15 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class OrganizationList extends Component
+class ImageGallery extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(
+        public $name,
+        public $path
+    )
     {
         //
     }
@@ -21,6 +24,6 @@ class OrganizationList extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.organization-list');
+        return view('components.image-gallery');
     }
 }

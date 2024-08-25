@@ -26,11 +26,11 @@ class Navbar extends Component
                 'routeName' => 'destinations',
                 'extraClass' => ''
             ],
-            (object) [
-                'name' => 'About',
-                'routeName' => 'help',
-                'extraClass' => ''
-            ],
+            // (object) [
+            //     'name' => 'About',
+            //     'routeName' => 'help',
+            //     'extraClass' => ''
+            // ],
         ];
     }
 

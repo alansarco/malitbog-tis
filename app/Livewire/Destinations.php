@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\CategoryEnum;
 use App\Models\Establishment;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
@@ -9,8 +10,13 @@ use Livewire\Component;
 class Destinations extends Component
 {
     public $establishments;
+    public $categories;
     public $userType = 'guest';
+
+    // Use for filtering
     public $searchItem;
+    public $filterRate;
+    public $filterCategory;
 
     public function render()
     {
@@ -19,28 +25,6 @@ class Destinations extends Component
     }
 
     public function booted()
-    {
-        $this->getEstablishment();
-    }
-
-    public function updatedSearchItem()
-    {
-        // $this->getEstablishment();
-        if (!empty($this->searchItem)) {
-            // $this->establishments = $this->establishments->where('name', 'LIKE', "%$$this->searchItem%");
-            // dd($this->establishments->where('name', 'LIKE', `%{$this->searchItem}%`));
-
-            $this->establishments = Establishment::with([
-                'reviews',
-                'images' => function ($query) {
-                    $query->where('is_cover', true);
-                }
-            ])
-            ->where('name', 'LIKE', "%$this->searchItem%")->get();
-        }
-    }
-
-    private function getEstablishment()
     {
         switch ($this->userType) {
             case 'owner':
@@ -61,5 +45,34 @@ class Destinations extends Component
                 ])->get();
                 break;
         }
+
+        $this->categories = CategoryEnum::cases();
+    }
+
+    public function updated()
+    {
+        $this->establishments = Establishment::with([
+            'reviews',
+            'images' => function ($query) {
+                $query->where('is_cover', true);
+            }
+        ])
+            ->when(!empty($this->searchItem), function ($query) {
+                $query->where('name', 'LIKE', "%{$this->searchItem}%");
+            })
+            ->when(!empty($this->filterCategory), function ($query) {
+                $query->where('category', $this->filterCategory);
+            })
+            ->when(!empty($this->filterRate), function ($query) {
+                $query->join('reviews', 'establishments.id', '=', 'reviews.establishment_id')
+                    ->whereNull('reviews.deleted_at')
+                    ->groupBy('establishments.id')
+                    ->havingRaw('AVG(reviews.rate) >= ?', [$this->filterRate]);
+            })
+            ->when(!empty($this->filterRate), function ($query) {
+                $query->selectRaw('establishments.*, AVG(reviews.rate) as avg_rate');
+            })
+            ->groupBy('establishments.id')
+            ->get();
     }
 }

@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\CategoryEnum;
 use App\Models\Establishment;
 use App\Models\Image;
+use App\Models\Review;
 use App\Models\User;
 use App\StatusEnum;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -28,7 +30,18 @@ class EstablishmentSeeder extends Seeder
             'geolocation_latitude' => '10.1792',
             'date_of_site_visit' => now()->format('y-m-d'),
             'status' => StatusEnum::ACTIVE,
+            'hours_of_operation' => 'Everyday @ 10:00 AM',
+            'category' => CategoryEnum::ADVENTURE_SPOT
         ]);
+
+        for ($i=0; $i < 5; $i++) {
+            Review::create([
+                'user_id' => $user->id,
+                'establishment_id' => $establishment->id,
+                'rate' => rand(0, 5),
+                'description' => 'Amazing Experience'
+            ]);
+        }
 
         Image::create([
             'establishment_id' => $establishment->id,
@@ -37,7 +50,7 @@ class EstablishmentSeeder extends Seeder
             'is_cover' => true,
         ]);
 
-        Establishment::create([
+        $establishment2 = Establishment::create([
             'name' => 'Prestigious 2',
             'owner_id' => $user->id,
             'address' => 'Malitbog, Southern Leyte',
@@ -47,13 +60,24 @@ class EstablishmentSeeder extends Seeder
             'geolocation_latitude' => '10.1792',
             'date_of_site_visit' => now()->format('y-m-d'),
             'status' => StatusEnum::ACTIVE,
+            'hours_of_operation' => 'Everyday @ 10:00 AM',
+            'category' => CategoryEnum::RESTAURANT
         ]);
+
+        for ($i=0; $i < 5; $i++) {
+            Review::create([
+                'user_id' => $user->id,
+                'establishment_id' => $establishment2->id,
+                'rate' => rand(0, 5),
+                'description' => 'Amazing Experience'
+            ]);
+        }
 
 
         // Owner2
         $user2 = User::where('username', 'owner2')->first();
 
-        Establishment::create([
+        $establishment3 = Establishment::create([
             'name' => 'Most Visited',
             'owner_id' => $user2->id,
             'address' => 'Malitbog, Southern Leyte',
@@ -63,6 +87,17 @@ class EstablishmentSeeder extends Seeder
             'geolocation_latitude' => '10.1792',
             'date_of_site_visit' => now()->format('y-m-d'),
             'status' => StatusEnum::ACTIVE,
+            'hours_of_operation' => 'Everyday @ 10:00 AM',
+            'category' => CategoryEnum::RELIGIOUS_SITE
         ]);
+
+        for ($i=0; $i < 5; $i++) {
+            Review::create([
+                'user_id' => $user2->id,
+                'establishment_id' => $establishment3->id,
+                'rate' => rand(0, 5),
+                'description' => 'Amazing Experience'
+            ]);
+        }
     }
 }
