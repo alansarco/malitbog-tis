@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('geolocation_longitude');
             $table->string('geolocation_latitude');
             $table->string('mode_of_transportation');
+            $table->string('hours_of_operation');
+            $table->string('contact_number')->default('NA');
+            $table->string('category');
             $table->string('status');
             $table->date('date_of_site_visit');
             $table->timestamps();

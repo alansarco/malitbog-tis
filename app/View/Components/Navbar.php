@@ -18,14 +18,19 @@ class Navbar extends Component
         $this->navbarItems = [
             (object) [
                 'name' => 'Home',
-                'routeName' => 'dashboard',
+                'routeName' => 'home',
                 'extraClass' => ''
             ],
             (object) [
-                'name' => 'Help',
-                'routeName' => 'help',
+                'name' => 'Destinations',
+                'routeName' => 'destinations',
                 'extraClass' => ''
             ],
+            // (object) [
+            //     'name' => 'About',
+            //     'routeName' => 'help',
+            //     'extraClass' => ''
+            // ],
         ];
     }
 

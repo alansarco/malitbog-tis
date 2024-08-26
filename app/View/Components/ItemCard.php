@@ -14,7 +14,9 @@ class ItemCard extends Component
     public function __construct(
         public $name,
         public $description,
-        public $imagePath = ''
+        public $urlPath,
+        public $imagePath = '',
+        public $rating = 0
     )
     {
         //

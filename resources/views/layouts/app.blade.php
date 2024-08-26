@@ -15,10 +15,9 @@
 </head>
 
 <body>
-    <x-navbar />
-    <div class="container mx-auto my-4">
+    {{-- <div class="container mx-auto my-4"> --}}
         @yield('content')
-    </div>
+    {{-- </div> --}}
 </body>
     @livewireScripts
     @yield('js-code')

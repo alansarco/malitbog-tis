@@ -20,7 +20,15 @@ class Establishment extends Model
         'mode_of_transportation',
         'status',
         'date_of_site_visit',
+        'hours_of_operation',
+        'contact_number',
+        'category'
     ];
+
+    public function getAverageRate()
+    {
+        return $this->reviews->count() ? $this->reviews->avg('rate') : '0';
+    }
 
     public function owner()
     {

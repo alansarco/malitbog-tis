@@ -1,11 +1,11 @@
-<header class="relative flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm py-3 shadow mb-2 ">
+<header class="relative flex flex-wrap sm:justify-start sm:flex-nowrap w-full shadow bg-blue-500 text-white py-6">
     <nav class="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between">
         <div class="flex items-center justify-between">
             <a class="flex-none text-xl font-semibold focus:outline-none focus:opacity-80" href="#"
                 aria-label="Brand">
-                <span class="inline-flex items-center gap-x-2 text-xl font-semibold">
-                    <img class="w-10 h-auto" src="../assets/img/logo/logo-short.png" alt="Logo">
-                    {{ env('APP_NAME', 'TIS') }}
+                <span class="inline-flex items-center gap-x-2 text-xl font-semibold' }}">
+                    {{-- {{ env('APP_NAME', 'TIS') }} --}}
+                    MALITBOG TOURISM
                 </span>
             </a>
             <div class="sm:hidden">
@@ -41,10 +41,11 @@
 
                 @guest
                     <x-nav-link name="Login" routeName="help"
-                        extraClass='py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-blue-600 text-blue-600 hover:border-blue-500 hover:text-blue-500 focus:outline-none focus:border-blue-500 focus:text-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:border-blue-500 dark:text-blue-500 dark:hover:text-blue-400 dark:hover:border-blue-400' />
+                        extraClass='text-black' />
                 @endguest
 
             </div>
         </div>
     </nav>
 </header>
+
