@@ -25,6 +25,7 @@
                     <li><strong>Hours of Operation:</strong> {{ $establishment->hours_of_operation }}</li>
                     <li><strong>Contact Number:</strong> {{ $establishment->contact_number }}</li>
                     <li><strong>Category:</strong> {{ $establishment->category }}</li>
+                    <li><strong>Transportation:</strong> {{ Str::title($establishment->mode_of_transportation) }}</li>
                 </ul>
             </div>
         </div>
@@ -94,9 +95,14 @@
 
         L.marker([latitude, longitude]).addTo(map);
 
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        //     maxZoom: 20,
+        //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        // }).addTo(map);
+
+        L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
             maxZoom: 20,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
         }).addTo(map);
     </script>
 </div>
