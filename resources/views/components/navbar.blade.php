@@ -40,12 +40,14 @@
                 @endforeach
 
                 @guest
-                    <x-nav-link name="Login" routeName="help"
-                        extraClass='text-black' />
+                    <x-nav-link name="Login" routeName="login" extraClass='text-black' />
                 @endguest
+
+                {{-- @auth
+                    <x-nav-link name="Logout" routeName="logout" extraClass='text-black' />
+                @endauth --}}
 
             </div>
         </div>
     </nav>
 </header>
-
