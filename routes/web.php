@@ -2,22 +2,34 @@
 
 use App\Livewire\Destinations;
 use App\Livewire\EstablishmentInformation;
-use App\Livewire\OrganizationInformation;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('pages.home');
-})->name('home');
+Route::get('/login', function () {
+    return view('pages.login');
+})->name('login')->middleware('guest');
 
-Route::get('/destinations', Destinations::class)->name('destinations');
+Route::post('/logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
 
-Route::get('/help', function () {
-    return view('pages.help');
-})->name('help');
+    return redirect()->route('login');
+})->name('logout');
 
-Route::get('/establishments/{establishment}', EstablishmentInformation::class)->name('establishment.show');
+Route::middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('pages.home');
+    })->name('home');
 
+    Route::get('/destinations', Destinations::class)->name('destinations');
 
-Route::get('/dashboard', function () {
-    return view('pages.dashboard');
-})->name('dashboard');
+    Route::get('/help', function () {
+        return view('pages.help');
+    })->name('help');
+
+    Route::get('/establishments/{establishment}', EstablishmentInformation::class)->name('establishment.show');
+
+    Route::get('/dashboard', function () {
+        return view('pages.dashboard');
+    })->name('dashboard');
+});

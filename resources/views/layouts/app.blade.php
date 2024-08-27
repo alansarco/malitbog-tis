@@ -14,11 +14,12 @@
     @yield('css-code')
 </head>
 
-<body>
+<body class="bg-gray-100 h-screen">
     {{-- <div class="container mx-auto my-4"> --}}
-        @yield('content')
+    @yield('content')
     {{-- </div> --}}
 </body>
-    @livewireScripts
-    @yield('js-code')
+@livewireScripts
+@yield('js-code')
+
 </html>
