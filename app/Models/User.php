@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -53,6 +54,11 @@ class User extends Authenticatable
     public function fullName()
     {
         return $this->last_name  . ', '. $this->first_name;
+    }
+
+    public function getCapsFullName()
+    {
+        return Str::upper($this->fullName());
     }
 
     public function role()
