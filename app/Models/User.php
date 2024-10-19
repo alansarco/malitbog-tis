@@ -51,4 +51,9 @@ class User extends Authenticatable
   {
     return $this->belongsTo(Role::class);
   }
+
+  public function establishment()
+  {
+    return $this->hasOne(Establishment::class);
+  }
 }
