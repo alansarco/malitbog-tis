@@ -1,0 +1,44 @@
+{
+  "menu": [
+    {
+      "url": "/dashboard",
+      "name": "Dashboard",
+      "icon": "menu-icon tf-icons bx bx-home-smile",
+      "slug": "dashboard"
+    },
+    {
+      "name": "User Accounts",
+      "icon": "menu-icon tf-icons bx bx-user",
+      "slug": "accounts",
+      "submenu": [
+        {
+          "url": "/accounts",
+          "name": "List of Accounts",
+          "slug": "accounts.index"
+        },
+        {
+          "url": "/accounts/create",
+          "name": "Create Account",
+          "slug": "accounts.create"
+        }
+      ]
+    },
+    {
+      "name": "Establishments",
+      "icon": "menu-icon tf-icons bx bx-store",
+      "slug": "establishments",
+      "submenu": [
+        {
+          "url": "/establishments",
+          "name": "List of Establishments",
+          "slug": "establishments.index"
+        },
+        {
+          "url": "/establishments/create",
+          "name": "Register Establishment",
+          "slug": "establishments.create"
+        }
+      ]
+    }
+  ]
+}
