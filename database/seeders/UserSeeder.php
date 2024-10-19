@@ -2,38 +2,44 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RoleEnum;
+use App\Models\BusinessType;
+use App\Models\Establishment;
 use App\Models\Role;
 use App\Models\User;
-use App\StatusEnum;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
-    {
+  /**
+   * Run the database seeds.
+   */
+  public function run(): void
+  {
+    User::factory()->create([
+      'name' => 'Admin',
+      'email' => 'admin@admin.com',
+      'role_id' => Role::where('name', RoleEnum::ADMIN->value)->value('id')
+    ]);
 
-        User::create([
-            'username' => 'owner1',
-            'email' => 'owner1@test.com',
-            'first_name' => 'test',
-            'last_name' => 'owner',
-            'role_id' => Role::where('name', 'owner')->first()?->id,
-            'status' => StatusEnum::ACTIVE,
-            'password' => bcrypt('1234'),
-        ]);
+    $user = User::factory()->create([
+      'name' => 'Owner1',
+      'email' => 'owner@email.com',
+      'role_id' => Role::where('name', RoleEnum::OWNER->value)->value('id')
+    ]);
 
-        User::create([
-            'username' => 'owner2',
-            'email' => 'owner2@test.com',
-            'first_name' => 'test2',
-            'last_name' => 'owner2',
-            'role_id' => Role::where('name', 'owner')->first()?->id,
-            'status' => StatusEnum::ACTIVE,
-            'password' => bcrypt('1234'),
-        ]);
-    }
+
+    Establishment::create([
+      'user_id' => $user->id,
+      'name' => 'Malitbog Municipality',
+      'description' => 'Malitbog Municipality',
+      'address' => 'Malitbog, Southern Leyte',
+      'geolocation_longitude' => '125.00094211920187',
+      'geolocation_latitude' => '10.158163827849396',
+      'mode_of_access' => 'Car Access, Foot Access',
+      'contact_number' => '+6391234567890',
+      'business_type_id' => BusinessType::inRandomOrder()->first()?->id,
+    ]);
+  }
 }

@@ -1,85 +1,162 @@
-@extends('layouts/authenticated')
+@extends('layouts/contentNavbarLayout')
 
-@section('title')
-    <title>{{ _('Update Account') }}</title>
+@section('title', 'User Accounts - Create')
+
+@section('content')
+    <div class="row">
+        <div class="col-xl">
+            <form method="POST" action="{{ route('accounts.update', ['account' => $user->id]) }}">
+                @method('PUT')
+                @csrf
+                <div class="d-flex justify-content-end mb-3">
+                    <button type="submit" class="btn btn-primary d-flex gap-1">
+                        <i class="bx bx-pencil"></i>
+                        Update
+                    </button>
+                </div>
+                <div class="card mb-6">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Account Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-6">
+                            <label class="form-label" for="name">Full Name <small class="text-danger">*</small> </label>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="John Doe"
+                                value="{{ old('name') ?? $user->name }}" />
+                            @error('name')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="email">Email <small class="text-danger">*</small></label>
+                            <div class="input-group input-group-merge">
+                                <input type="text" id="email" class="form-control" name="email"
+                                    placeholder="john.doe@gmail.com" aria-label="john.doe" aria-describedby="email2"
+                                    value="{{ old('email') ?? $user->email }}" />
+                            </div>
+                            <div class="form-text"> You can use letters, numbers & periods </div>
+                            @error('email')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="*****" />
+                            <div class="form-text"> Password must be 8 characters length </div>
+                            @error('password')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="password_confirmation">Confirm Password </label>
+                            <input type="password" class="form-control" id="password_confirmation"
+                                name="password_confirmation" placeholder="*****" />
+                            <div class="form-text"> Password must be 8 characters length </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-6">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Establishment Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-6">
+                            <label class="form-label" for="establishment_name">Name <small
+                                    class="text-danger">*</small></label>
+                            <input type="text" class="form-control" id="establishment_name" name="establishment_name"
+                                placeholder="Starbucks"
+                                value="{{ old('establishment_name') ?? $user->establishment?->name }}" />
+                            @error('establishment_name')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="establishment_description">Description <small
+                                    class="text-danger">*</small></label>
+                            <textarea id="establishment_description" class="form-control" name="establishment_description"
+                                placeholder="Short Information About the establishmment">{{ old('establishment_description') ?? $user->establishment?->description }}</textarea>
+                            @error('establishment_description')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="establishment_address">Address <small
+                                    class="text-danger">*</small></label>
+                            <textarea id="establishment_address" class="form-control" name="establishment_address"
+                                placeholder="Malitbog, Southern Leyte">{{ old('establishment_address') ?? $user->establishment?->address }}</textarea>
+                            @error('establishment_address')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="establishment_geolocation_longitude">Geolocation
+                                Longitude</label>
+                            <input type="number" class="form-control" id="establishment_geolocation_longitude"
+                                name="establishment_geolocation_longitude" placeholder="125.00094211920187"
+                                value="{{ old('establishment_geolocation_longitude') ?? $user->establishment?->geolocation_longitude }}" />
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="establishment_geolocation_latitude">Geolocation
+                                Latitude</label>
+                            <input type="number" class="form-control" id="establishment_geolocation_latitude"
+                                placeholder="10.158163827849396"
+                                value="{{ old('establishment_geolocation_latitude') ?? $user->establishment?->geolocation_latitude }}" />
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="establishment_contact_number">Contact Number <small
+                                    class="text-danger">*</small></label>
+                            <input type="text" class="form-control" id="establishment_contact_number"
+                                placeholder="+6391234567890"
+                                value="{{ old('establishment_contact_number') ?? $user->establishment?->contact_number }}" />
+                            @error('establishment_contact_number')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="establishment_mode_of_access">Mode Of Access <small
+                                    class="text-danger">*</small></label>
+                            <select class="select_mode form-select" name="establishment_mode_of_access[]"
+                                multiple="multiple">
+                                <option value="Car Access" @if (in_array('Car Access', old('establishment_mode_of_access') ?? explode(',', $user->establishment?->mode_of_access))) selected @endif>Car Access
+                                </option>
+                                <option value="Foot Access" @if (in_array('Foot Access', old('establishment_mode_of_access') ?? explode(',', $user->establishment?->mode_of_access))) selected @endif>Foot Access
+                                </option>
+                            </select>
+                            <div class="form-text"> Hold ctrl key or command to select multiple items </div>
+                            @error('establishment_mode_of_access')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="establishment_type_of_business">Type of Business <small
+                                    class="text-danger">*</small></label>
+                            <select class="select_mode form-select" name="establishment_type_of_business">
+                                <option value="" disabled selected>Select one</option>
+                                @foreach ($businessTypes as $businessType)
+                                    <option value="{{ $businessType->id }}"
+                                        @if (
+                                            $businessType->id == old('establishment_type_of_business') ||
+                                                $businessType->id == $user->establishment?->business_type_id) selected @endif>{{ $businessType->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('establishment_type_of_business')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
 @endsection
 
-@section('section-title')
-    {{ _('Update Account') }}
-@endsection
-
-@section('section-content')
-    <form action="{{ route('accounts.update', ['account' => $user]) }}" method="post">
-        @csrf
-        @method('PUT')
-        <div class="flex gap-2 mb-2">
-            <button type="submit"
-                class="px-4 py-2 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-green-600 border border-transparent rounded-lg  hover:bg-green-700 focus:outline-none focus:ring ml-auto">
-                Update
-            </button>
-        </div>
-
-        <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-            <section class="flex flex-col gap-3">
-                <div>
-                    <label for="username" class="block mb-2 text-sm text-gray-700 font-medium">
-                        Username <span class="text-red-500">*</span>
-                    </label>
-                    <input type="text" id="username" value="{{ $user->username }}"
-                        class="py-3 px-4 block w-full bg-gray-100 border-blue-500 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                    @error('username')
-                        <small class="text-red-500">{{ $message }}</small>
-                    @enderror
-                </div>
-                <div>
-                    <label for="email" class="block mb-2 text-sm text-gray-700 font-medium">
-                        Email <span class="text-red-500">*</span>
-                    </label>
-                    <input type="email" id="email" value="{{ $user->email }}"
-                        class="py-3 px-4 block w-full bg-gray-100 border-blue-500 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                    @error('email')
-                        <small class="text-red-500">{{ $message }}</small>
-                    @enderror
-                </div>
-                <div>
-                    <label for="first_name" class="block mb-2 text-sm text-gray-700 font-medium">
-                        First Name <span class="text-red-500">*</span>
-                    </label>
-                    <input type="text" id="first_name" value="{{ $user->first_name }}"
-                        class="py-3 px-4 block w-full bg-gray-100 border-blue-500 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                    @error('first_name')
-                        <small class="text-red-500">{{ $message }}</small>
-                    @enderror
-                </div>
-                <div>
-                    <label for="middle_name" class="block mb-2 text-sm text-gray-700 font-medium">
-                        Middle Name
-                    </label>
-                    <input type="text" id="middle_name" value="{{ $user->middle_name }}"
-                        class="py-3 px-4 block w-full bg-gray-100 border-blue-500 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                </div>
-                <div>
-                    <label for="last_name" class="block mb-2 text-sm text-gray-700 font-medium">
-                        Last Name <span class="text-red-500">*</span>
-                    </label>
-                    <input type="text" id="last_name" value="{{ $user->last_name }}"
-                        class="py-3 px-4 block w-full bg-gray-100 border-blue-500 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                    @error('last_name')
-                        <small class="text-red-500">{{ $message }}</small>
-                    @enderror
-                </div>
-                <div>
-                    <label for="suffix" class="block mb-2 text-sm text-gray-700 font-medium">
-                        Suffix
-                    </label>
-                    <input type="text" id="suffix" value="{{ $user->suffix }}"
-                        class="py-3 px-4 block w-full bg-gray-100 border-blue-500 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                    @error('suffix')
-                        <small class="text-red-500">{{ $message }}</small>
-                    @enderror
-                </div>
-            </section>
-        </div>
-
-    </form>
+@section('jsScripts')
+    <script>
+        $(document).ready(function() {
+            $('.select_mode').select2();
+        });
+    </script>
 @endsection

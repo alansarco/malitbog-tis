@@ -8,45 +8,28 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Establishment extends Model
 {
-    use HasFactory, SoftDeletes;
+  use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'owner_id',
-        'name',
-        'description',
-        'address',
-        'geolocation_longitude',
-        'geolocation_latitude',
-        'mode_of_transportation',
-        'status',
-        'date_of_site_visit',
-        'hours_of_operation',
-        'contact_number',
-        'category'
-    ];
+  protected $fillable = [
+    'user_id',
+    'name',
+    'description',
+    'address',
+    'geolocation_longitude',
+    'geolocation_latitude',
+    'mode_of_access',
+    'contact_number',
+    'business_type_id',
+    'status',
+  ];
 
-    public function getAverageRate()
-    {
-        return $this->reviews->count() ? $this->reviews->avg('rate') : '0';
-    }
+  public function owner()
+  {
+    return $this->belongsTo(User::class, 'user_id');
+  }
 
-    public function owner()
-    {
-        return $this->belongsTo(User::class, 'owner_id');
-    }
-
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
-    }
-
-    public function images()
-    {
-        return $this->hasMany(Image::class);
-    }
-
-    public function document()
-    {
-        return $this->hasOne(Document::class);
-    }
+  public function businessType()
+  {
+    return $this->belongsTo(BusinessType::class, 'business_type_id');
+  }
 }
