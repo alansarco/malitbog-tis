@@ -68,9 +68,12 @@
                     <div class="dropdown-divider my-1"></div>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="javascript:void(0);">
-                        <i class="bx bx-power-off bx-md me-3"></i><span>Log Out</span>
-                    </a>
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button type="submit" class="dropdown-item" href="javascript:void(0);">
+                            <i class="bx bx-power-off bx-md me-3"></i><span>Log Out</span>
+                        </button>
+                    </form>
                 </li>
             </ul>
         </li>

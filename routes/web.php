@@ -17,6 +17,7 @@ use App\Http\Controllers\pages\MiscUnderMaintenance;
 use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\authentications\RegisterBasic;
 use App\Http\Controllers\authentications\ForgotPasswordBasic;
+use App\Http\Controllers\BusinessTypeController;
 use App\Http\Controllers\cards\CardBasic;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EstablishmentController;
@@ -122,6 +123,8 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
   Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+  Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
   Route::resource('accounts', AccountController::class);
   Route::resource('establishments', EstablishmentController::class);
+  Route::resource('business-types', BusinessTypeController::class);
 });

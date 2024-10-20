@@ -4,12 +4,14 @@
       "url": "/dashboard",
       "name": "Dashboard",
       "icon": "menu-icon tf-icons bx bx-home-smile",
-      "slug": "dashboard"
+      "slug": "dashboard",
+      "permission": ["admin", "owner"]
     },
     {
       "name": "User Accounts",
       "icon": "menu-icon tf-icons bx bx-user",
       "slug": "accounts",
+      "permission": ["admin"],
       "submenu": [
         {
           "url": "/accounts",
@@ -27,6 +29,7 @@
       "name": "Establishments",
       "icon": "menu-icon tf-icons bx bx-store",
       "slug": "establishments",
+      "permission": ["admin"],
       "submenu": [
         {
           "url": "/establishments",
@@ -37,6 +40,24 @@
           "url": "/establishments/create",
           "name": "Register Establishment",
           "slug": "establishments.create"
+        }
+      ]
+    },
+    {
+      "name": "Business Types",
+      "icon": "menu-icon tf-icons bx bx-buildings",
+      "slug": "business-types",
+      "permission": ["admin"],
+      "submenu": [
+        {
+          "url": "/business-types",
+          "name": "List of Business Type",
+          "slug": "business-types.index"
+        },
+        {
+          "url": "/business-types/create",
+          "name": "Create Business Type",
+          "slug": "business-types.create"
         }
       ]
     }
