@@ -5,7 +5,7 @@
 @section('content')
     <div class="d-flex justify-content-end">
         <a href="{{ route('news.create') }}" class="btn btn-primary rounded my-2 py-2 d-flex gap-2">
-            <i class="bx bx-store"></i>
+            <i class="bx bx-news"></i>
             Add
         </a>
     </div>
