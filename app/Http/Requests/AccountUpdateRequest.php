@@ -23,7 +23,7 @@ class AccountUpdateRequest extends FormRequest
   {
     return [
       'name' => 'required',
-      'email' => 'required|unique:users,email,' . $this->account,
+      'email' => 'required|unique:users,email,' . $this->account . ',deleted_at,NULL',
       'password' => 'required|confirmed|min:8',
       'establishment_name' => 'required',
       'establishment_description' => 'required',

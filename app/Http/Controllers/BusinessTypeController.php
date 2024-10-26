@@ -20,6 +20,10 @@ class BusinessTypeController extends Controller
   public function store(Request $request)
   {
     $request->validate(['name' => 'required|unique:business_types,name']);
+
+    BusinessType::create(['name' => $request->name]);
+
+    return redirect(route('business-types.index'));
   }
 
   public function edit(BusinessType $businessType)
@@ -30,5 +34,9 @@ class BusinessTypeController extends Controller
   public function update(Request $request, BusinessType $businessType)
   {
     $request->validate(['name' => 'required|unique:business_types,name,' . $businessType->id]);
+
+    $businessType->update(['name' => $request->name]);
+
+    return redirect(route('business-types.index'));
   }
 }

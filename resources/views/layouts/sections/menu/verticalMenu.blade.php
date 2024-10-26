@@ -19,7 +19,7 @@
             {{-- adding active and open class if child is active --}}
 
             {{-- menu headers --}}
-            @if (isset($menu->permission) && in_array(auth()->user()->role->name, $menu->permission))
+            @if (isset($menu->permission) && in_array(auth()->user()?->role->name, $menu->permission))
                 @if (isset($menu->menuHeader))
                     <li class="menu-header small text-uppercase">
                         <span class="menu-header-text">{{ __($menu->menuHeader) }}</span>

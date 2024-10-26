@@ -29,9 +29,6 @@ final class EstablishmentTable extends PowerGridComponent
     $this->showCheckBox();
 
     return [
-      Exportable::make('export')
-        ->striped()
-        ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
       Header::make()->showSearchInput(),
       Footer::make()
         ->showPerPage()
@@ -147,7 +144,7 @@ final class EstablishmentTable extends PowerGridComponent
       Button::add('edit')
         ->slot('Edit')
         ->class('btn btn-warning')
-        ->route('accounts.edit', ['account' => $row->id], '_blank'),
+        ->route('establishments.edit', ['establishment' => $row->id], '_blank'),
 
       Button::add('delete')
         ->slot('Delete')

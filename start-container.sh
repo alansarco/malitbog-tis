@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Install composer dependencies && setup app
-# if [ ! -d "vendor" ] && [ -f "composer.json" ] && [ "$APP_ENV" == "production" ]; then
+if [ ! -d "vendor" ] && [ -f "composer.json" ]; then #&& [ "$APP_ENV" == "production" ]; then
     composer config --global process-timeout 6000
     composer install
     composer dump-autoload
 
     php artisan key:generate
-# fi
+fi
 
 # Install npm dependencies
 # if [ ! -d "node_modules" ] && [ -f "package.json" ] && [ "$APP_ENV" == "production" ]; then
@@ -26,6 +26,8 @@ if [[ $outdated == *"Package"* ]]; then
 else
     echo "No updates found. Your dependencies are up to date."
 fi
+
+php artisan migrate --seed
 
 # Run apache foreground
 apachectl -D FOREGROUND

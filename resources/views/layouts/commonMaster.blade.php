@@ -8,7 +8,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>@yield('title') | Sneat - HTML Laravel Free Admin Template </title>
+    <title>@yield('title')</title>
     <meta name="description"
         content="{{ config('variables.templateDescription') ? config('variables.templateDescription') : '' }}" />
     <meta name="keywords"
@@ -20,34 +20,34 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
 
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
     <!-- Include Styles -->
     @include('layouts/sections/styles')
 
     <!-- Include Scripts for customizer, helper, analytics, config -->
     @include('layouts/sections/scriptsIncludes')
+    @yield('cssStyles')
     @livewireStyles
 </head>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <body>
+
+    <!-- Include Scripts -->
+    @include('layouts/sections/scripts')
+
+
+    {{-- Custom Scripts --}}
+    @yield('jsScripts')
+
 
     <!-- Layout Content -->
     @yield('layoutContent')
     <!--/ Layout Content -->
-
-
-
-    <!-- Include Scripts -->
-    @include('layouts/sections/scripts')
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    @livewireScripts
-
-    {{-- Custom Scripts --}}
-    @yield('jsScripts')
 </body>
 
 </html>

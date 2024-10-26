@@ -1,4 +1,4 @@
-@extends('layouts/contentNavbarLayout')
+@extends('layouts/layoutWithScript')
 
 @section('title', 'User Accounts - Create')
 

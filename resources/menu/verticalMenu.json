@@ -60,6 +60,24 @@
           "slug": "business-types.create"
         }
       ]
+    },
+    {
+      "name": "Establishment Events",
+      "icon": "menu-icon tf-icons bx bx-calendar",
+      "slug": "events",
+      "permission": ["admin"],
+      "submenu": [
+        {
+          "url": "/events",
+          "name": "List of Events",
+          "slug": "events.index"
+        },
+        {
+          "url": "/events/create",
+          "name": "Create Establishment Event",
+          "slug": "events.create"
+        }
+      ]
     }
   ]
 }

@@ -20,15 +20,20 @@ services:
     restart: always
     env_file: .env
     environment:
-      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD:-password}'
-      MYSQL_ROOT_HOST: '%'
-      MYSQL_DATABASE: '${DB_DATABASE:-tis_db}'
-      MYSQL_USER: '${DB_USERNAME:-dbuser}'
-      MYSQL_PASSWORD: '${DB_PASSWORD:-password}'
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD:-password}"
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: "${DB_DATABASE:-tis_db}"
+      MYSQL_USER: "${DB_USERNAME:-dbuser}"
+      MYSQL_PASSWORD: "${DB_PASSWORD:-password}"
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - mysql_db:/var/lib/mysql
     networks:
       - tis-app
 
 networks:
   tis-app:
     driver: bridge
+
+volumes:
+  mysql_db:

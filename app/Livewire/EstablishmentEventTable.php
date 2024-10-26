@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Role;
+use App\Models\Event;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Button;
@@ -16,7 +16,7 @@ use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
-final class RoleTable extends PowerGridComponent
+final class EstablishmentEventTable extends PowerGridComponent
 {
   use WithExport;
 
@@ -34,7 +34,7 @@ final class RoleTable extends PowerGridComponent
 
   public function datasource(): Builder
   {
-    return Role::query();
+    return Event::query();
   }
 
   public function relationSearch(): array
@@ -45,30 +45,19 @@ final class RoleTable extends PowerGridComponent
   public function fields(): PowerGridFields
   {
     return PowerGrid::fields()
-      ->add('id')
-      ->add('name')
-      ->add('status')
+      ->add('establishment', fn($event) => e($event->establishment->name))
+      ->add('title')
+      ->add('date')
       ->add('created_at');
   }
 
   public function columns(): array
   {
     return [
-      Column::make('Id', 'id'),
-      Column::make('Name', 'name')
-        ->sortable()
-        ->searchable(),
-
-      Column::make('Status', 'status')
-        ->sortable()
-        ->searchable(),
-
-      Column::make('Created at', 'created_at_formatted', 'created_at')
-        ->sortable(),
-
-      Column::make('Created at', 'created_at')
-        ->sortable()
-        ->searchable(),
+      Column::make('Establishment Name', 'establishment'),
+      Column::make('Title', 'title'),
+      Column::make('Date', 'date'),
+      Column::make('Published Date', 'created_at'),
 
       Column::action('Action')
     ];
@@ -85,14 +74,27 @@ final class RoleTable extends PowerGridComponent
     $this->js('alert(' . $rowId . ')');
   }
 
-  public function actions(Role $row): array
+  #[\Livewire\Attributes\On('delete')]
+  public function delete($rowId): void
+  {
+    $event = Event::find($rowId);
+    $event->delete();
+  }
+
+  public function actions(Event $row): array
   {
     return [
       Button::add('edit')
-        ->slot('Edit: ' . $row->id)
+        ->slot('Edit')
+        ->class('btn btn-warning')
+        ->route('events.edit', ['event' => $row->id]),
+
+      Button::add('delete')
+        ->slot('Delete')
         ->id()
-        ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
-        ->dispatch('edit', ['rowId' => $row->id])
+        ->class('btn btn-danger')
+        ->confirm('Do you wish to delete this record?')
+        ->dispatch('delete', ['rowId' => $row->id])
     ];
   }
 

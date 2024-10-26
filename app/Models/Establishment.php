@@ -32,4 +32,9 @@ class Establishment extends Model
   {
     return $this->belongsTo(BusinessType::class, 'business_type_id');
   }
+
+  public function events()
+  {
+    return $this->hasMany(Event::class, 'establishment_id');
+  }
 }

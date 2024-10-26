@@ -23,7 +23,7 @@ class AccountStoreRequest extends FormRequest
   {
     return [
       'name' => 'required',
-      'email' => 'required|unique:users,email',
+      'email' => 'required|unique:users,email,deleted_at,NULL',
       'password' => 'required|confirmed|min:8',
       'establishment_name' => 'required',
       'establishment_description' => 'required',

@@ -21,6 +21,7 @@ use App\Http\Controllers\BusinessTypeController;
 use App\Http\Controllers\cards\CardBasic;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EstablishmentController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\user_interface\Accordion;
 use App\Http\Controllers\user_interface\Alerts;
 use App\Http\Controllers\user_interface\Badges;
@@ -127,4 +128,5 @@ Route::middleware('auth')->group(function () {
   Route::resource('accounts', AccountController::class);
   Route::resource('establishments', EstablishmentController::class);
   Route::resource('business-types', BusinessTypeController::class);
+  Route::resource('events', EventController::class);
 });
