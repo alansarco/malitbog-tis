@@ -78,6 +78,24 @@
           "slug": "events.create"
         }
       ]
+    },
+    {
+      "name": "News",
+      "icon": "menu-icon tf-icons bx bx-news",
+      "slug": "news",
+      "permission": ["admin"],
+      "submenu": [
+        {
+          "url": "/news",
+          "name": "List of Headline News",
+          "slug": "news.index"
+        },
+        {
+          "url": "/news/create",
+          "name": "Create Headline News",
+          "slug": "news.create"
+        }
+      ]
     }
   ]
 }

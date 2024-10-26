@@ -48,6 +48,7 @@ use App\Http\Controllers\form_elements\BasicInput;
 use App\Http\Controllers\form_elements\InputGroups;
 use App\Http\Controllers\form_layouts\VerticalForm;
 use App\Http\Controllers\form_layouts\HorizontalForm;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\tables\Basic as TablesBasic;
 
 Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
@@ -129,4 +130,5 @@ Route::middleware('auth')->group(function () {
   Route::resource('establishments', EstablishmentController::class);
   Route::resource('business-types', BusinessTypeController::class);
   Route::resource('events', EventController::class);
+  Route::resource('news', NewsController::class);
 });

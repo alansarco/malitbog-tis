@@ -1,16 +1,17 @@
 @extends('layouts/layoutWithScript')
 
-@section('title', 'Create News Headline')
+@section('title', 'Update News Headline')
 
 @section('content')
     <div class="row">
         <div class="col-xl">
             <form method="POST" action="{{ route('news.store') }}">
                 @csrf
+                @method('PUT')
                 <div class="d-flex justify-content-end mb-3">
                     <button id="" type="submit" class="btn btn-primary d-flex gap-1">
                         <i class="bx bx-plus"></i>
-                        Save
+                        Update
                     </button>
                 </div>
                 <div class="card mb-6">
@@ -21,7 +22,7 @@
                         <div class="mb-6">
                             <label class="form-label" for="title">Title <small class="text-danger">*</small></label>
                             <input type="text" class="form-control" id="title" name="title" placeholder="Free Food"
-                                value="{{ old('title') }}" />
+                                value="{{ old('title', $news->title) }}" />
                             @error('title')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
@@ -31,7 +32,7 @@
                             <label class="form-label" for="description">Description <small
                                     class="text-danger">*</small></label>
 
-                            <textarea id="description" name="description" class="form-control" rows="50">{{ old('description') }}</textarea>
+                            <textarea id="description" name="description" class="form-control" rows="50">{{ old('description', $news->description) }}</textarea>
                             @error('description')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
