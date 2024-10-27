@@ -91,8 +91,8 @@ final class UserTable extends PowerGridComponent
     $this->js('alert(' . $rowId . ')');
   }
 
-  #[\Livewire\Attributes\On('delete')]
-  public function delete($rowId): void
+  #[\Livewire\Attributes\On('deleteUser')]
+  public function deleteUser($rowId): void
   {
     $user = User::find($rowId);
     $user->delete();
@@ -103,11 +103,6 @@ final class UserTable extends PowerGridComponent
   public function actions(User $row): array
   {
     return [
-      Button::add('view')
-        ->slot('View')
-        ->id()
-        ->class('btn btn-info')
-        ->dispatch('edit', ['rowId' => $row->id]),
 
       Button::add('edit')
         ->slot('Edit')
@@ -119,7 +114,7 @@ final class UserTable extends PowerGridComponent
         ->id()
         ->class('btn btn-danger')
         ->confirm('Do you wish to delete this record?')
-        ->dispatch('delete', ['rowId' => $row->id])
+        ->dispatch('deleteUser', ['rowId' => $row->id])
     ];
   }
 

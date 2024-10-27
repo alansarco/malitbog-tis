@@ -80,22 +80,43 @@
       ]
     },
     {
-      "name": "News",
-      "icon": "menu-icon tf-icons bx bx-news",
-      "slug": "news",
+      "name": "Establishment Offers",
+      "icon": "menu-icon tf-icons bx bx-list-minus",
+      "slug": "offerings",
       "permission": ["admin"],
       "submenu": [
         {
-          "url": "/news",
-          "name": "List of Headline News",
-          "slug": "news.index"
+          "url": "/offerings",
+          "name": "List of Offers",
+          "slug": "offerings.index"
         },
         {
-          "url": "/news/create",
-          "name": "Create Headline News",
-          "slug": "news.create"
+          "url": "/offerings/create",
+          "name": "Create Establishment Offer",
+          "slug": "offerings.create"
         }
       ]
+    },
+    {
+      "url": "/my-establishment",
+      "name": "Establishment Information",
+      "icon": "menu-icon tf-icons bx bx-store",
+      "slug": "owners.establishment-index",
+      "permission": ["owner"]
+    },
+    {
+      "url": "/offers",
+      "name": "Establishment Offers",
+      "icon": "menu-icon tf-icons bx bx-list-minus",
+      "slug": "owners.establishment-offers",
+      "permission": ["owner"]
+    },
+    {
+      "url": "/my-galleries",
+      "name": "Establishment Galleries",
+      "icon": "menu-icon tf-icons bx bx-images",
+      "slug": "owners.establishment-galleries",
+      "permission": ["owner"]
     }
   ]
 }

@@ -37,4 +37,14 @@ class Establishment extends Model
   {
     return $this->hasMany(Event::class, 'establishment_id');
   }
+
+  public function offerings()
+  {
+    return $this->hasMany(Offering::class, 'establishment_id');
+  }
+
+  public function galleries()
+  {
+    return $this->hasMany(Gallery::class, 'establishment_id');
+  }
 }

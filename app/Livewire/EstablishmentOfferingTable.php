@@ -2,9 +2,12 @@
 
 namespace App\Livewire;
 
-use App\Models\BusinessType;
+use App\Enums\RoleEnum;
+use App\Models\Offering;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
@@ -16,14 +19,14 @@ use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
-final class BusinessTypeTable extends PowerGridComponent
+final class EstablishmentOfferingTable extends PowerGridComponent
 {
   use WithExport;
 
+  public string $tableName = 'EstablishmentOfferingTable';
+
   public function setUp(): array
   {
-    $this->showCheckBox();
-
     return [
       Header::make()->showSearchInput(),
       Footer::make()
@@ -34,7 +37,17 @@ final class BusinessTypeTable extends PowerGridComponent
 
   public function datasource(): Builder
   {
-    return BusinessType::query();
+    if ((request()->establishment || Session::has('establishmentId')) && !str_contains(url()->current(), 'offerings')) {
+      Session::flash('establishmentId', request()->establishment?->id ?? Session::get('establishmentId'));
+    }
+
+    if (auth()->user()->role->name == RoleEnum::OWNER->value) {
+      Session::flash('establishmentId', auth()->user()->establishment->id);
+    }
+
+    return Offering::query()->when(Session::has('establishmentId'), function ($query) {
+      $query->where('establishment_id', Session::get('establishmentId'));
+    });
   }
 
   public function relationSearch(): array
@@ -45,13 +58,27 @@ final class BusinessTypeTable extends PowerGridComponent
   public function fields(): PowerGridFields
   {
     return PowerGrid::fields()
-      ->add('name');
+      ->add('image', function ($item) {
+        $path = $item->path ? str_replace('public', '/storage', $item->path) : 'https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg';
+        return '<img class="" height="100px" width="180px" src="' . asset("{$path}") . '">';
+      })
+      ->add('establishment', fn($offer) => e($offer->establishment->name))
+      ->add('name')
+      ->add('path')
+      ->add('price');
   }
 
   public function columns(): array
   {
     return [
+
+      Column::make('Image', 'image'),
+      Column::make('Establishment', 'establishment'),
       Column::make('Name', 'name')
+        ->sortable()
+        ->searchable(),
+
+      Column::make('Price', 'price')
         ->sortable()
         ->searchable(),
 
@@ -70,28 +97,28 @@ final class BusinessTypeTable extends PowerGridComponent
     $this->js('alert(' . $rowId . ')');
   }
 
-  #[\Livewire\Attributes\On('deleteType')]
-  public function deleteType($rowId): void
+  #[\Livewire\Attributes\On('deleteOffer')]
+  public function deleteOffer($rowId): void
   {
-    $businessType = BusinessType::find($rowId);
-    $businessType->delete();
+    $offer = Offering::find($rowId);
+    $offer->delete();
   }
 
-  public function actions(BusinessType $row): array
+  public function actions(Offering $row): array
   {
     return [
 
       Button::add('edit')
         ->slot('Edit')
         ->class('btn btn-warning')
-        ->route('business-types.edit', ['business_type' => $row->id], '_blank'),
+        ->route('offerings.edit', ['offering' => $row->id], '_blank'),
 
       Button::add('delete')
         ->slot('Delete')
         ->id()
         ->class('btn btn-danger')
         ->confirm('Do you wish to delete this record?')
-        ->dispatch('deleteType', ['rowId' => $row->id])
+        ->dispatch('deleteOffer', ['rowId' => $row->id])
     ];
   }
 

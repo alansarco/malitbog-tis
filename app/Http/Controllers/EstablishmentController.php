@@ -14,6 +14,12 @@ class EstablishmentController extends Controller
     return view('establishments.index');
   }
 
+  public function show(Establishment $establishment)
+  {
+    $establishment->load(['owner', 'offerings', 'galleries']);
+    return view('establishments.show', compact('establishment'));
+  }
+
   public function create()
   {
     $users = User::get();
