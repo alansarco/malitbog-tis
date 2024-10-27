@@ -78,6 +78,45 @@
           "slug": "events.create"
         }
       ]
+    },
+    {
+      "name": "Establishment Offerings",
+      "icon": "menu-icon tf-icons bx bx-list-minus",
+      "slug": "offerings",
+      "permission": ["admin"],
+      "submenu": [
+        {
+          "url": "/offerings",
+          "name": "List of Offerings",
+          "slug": "offerings.index"
+        },
+        {
+          "url": "/offerings/create",
+          "name": "Create Establishment Offering",
+          "slug": "offerings.create"
+        }
+      ]
+    },
+    {
+      "url": "/my-establishment",
+      "name": "Establishment Information",
+      "icon": "menu-icon tf-icons bx bx-store",
+      "slug": "owners.establishment-index",
+      "permission": ["owner"]
+    },
+    {
+      "url": "/dashboard",
+      "name": "Establishment Offers",
+      "icon": "menu-icon tf-icons bx bx-list-minus",
+      "slug": "establishment",
+      "permission": ["owner"]
+    },
+    {
+      "url": "/dashboard",
+      "name": "Establishment Galleries",
+      "icon": "menu-icon tf-icons bx bx-images",
+      "slug": "establishment",
+      "permission": ["owner"]
     }
   ]
 }

@@ -48,6 +48,8 @@ use App\Http\Controllers\form_elements\BasicInput;
 use App\Http\Controllers\form_elements\InputGroups;
 use App\Http\Controllers\form_layouts\VerticalForm;
 use App\Http\Controllers\form_layouts\HorizontalForm;
+use App\Http\Controllers\OfferingController;
+use App\Http\Controllers\OwnerEstablishmentController;
 use App\Http\Controllers\tables\Basic as TablesBasic;
 
 Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
@@ -125,8 +127,17 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
   Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
   Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-  Route::resource('accounts', AccountController::class);
-  Route::resource('establishments', EstablishmentController::class);
-  Route::resource('business-types', BusinessTypeController::class);
-  Route::resource('events', EventController::class);
+
+  Route::middleware('role:admin')->group(function () {
+    Route::resource('accounts', AccountController::class);
+    Route::resource('establishments', EstablishmentController::class);
+    Route::resource('business-types', BusinessTypeController::class);
+    Route::resource('events', EventController::class);
+    Route::resource('offerings', OfferingController::class);
+  });
+
+  Route::middleware('role:owner')->group(function () {
+    Route::get('/my-establishment', [OwnerEstablishmentController::class, 'index'])->name('owners.establishment-index');
+    Route::put('/my-establishment', [OwnerEstablishmentController::class, 'update'])->name('owners.establishment-update');
+  });
 });

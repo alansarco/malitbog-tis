@@ -2,9 +2,11 @@
 
 namespace App\Livewire;
 
-use App\Models\Event;
+use App\Models\Offering;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
@@ -16,14 +18,14 @@ use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
-final class EstablishmentEventTable extends PowerGridComponent
+final class EstablishmentOfferingTable extends PowerGridComponent
 {
   use WithExport;
 
+  public string $tableName = 'EstablishmentOfferingTable';
+
   public function setUp(): array
   {
-    $this->showCheckBox();
-
     return [
       Header::make()->showSearchInput(),
       Footer::make()
@@ -34,7 +36,13 @@ final class EstablishmentEventTable extends PowerGridComponent
 
   public function datasource(): Builder
   {
-    return Event::query();
+    if ((request()->establishment || Session::has('establishmentId')) && !str_contains(url()->current(), 'offerings')) {
+      Session::flash('establishmentId', request()->establishment?->id ?? Session::get('establishmentId'));
+    }
+
+    return Offering::query()->when(Session::has('establishmentId'), function ($query) {
+      $query->where('establishment_id', Session::get('establishmentId'));
+    });
   }
 
   public function relationSearch(): array
@@ -45,19 +53,29 @@ final class EstablishmentEventTable extends PowerGridComponent
   public function fields(): PowerGridFields
   {
     return PowerGrid::fields()
-      ->add('establishment', fn($event) => e($event->establishment->name))
-      ->add('title')
-      ->add('date')
-      ->add('created_at');
+      ->add('image', function ($item) {
+        $path = $item->path ? str_replace('public', '/storage', $item->path) : 'https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg';
+        return '<img class="" height="100px" width="180px" src="' . asset("{$path}") . '">';
+      })
+      ->add('establishment', fn($offer) => e($offer->establishment->name))
+      ->add('name')
+      ->add('path')
+      ->add('price');
   }
 
   public function columns(): array
   {
     return [
-      Column::make('Establishment Name', 'establishment'),
-      Column::make('Title', 'title'),
-      Column::make('Date', 'date'),
-      Column::make('Published Date', 'created_at'),
+
+      Column::make('Image', 'image'),
+      Column::make('Establishment', 'establishment'),
+      Column::make('Name', 'name')
+        ->sortable()
+        ->searchable(),
+
+      Column::make('Price', 'price')
+        ->sortable()
+        ->searchable(),
 
       Column::action('Action')
     ];
@@ -74,27 +92,28 @@ final class EstablishmentEventTable extends PowerGridComponent
     $this->js('alert(' . $rowId . ')');
   }
 
-  #[\Livewire\Attributes\On('deleteEvent')]
-  public function deleteEvent($rowId): void
+  #[\Livewire\Attributes\On('deleteOffer')]
+  public function deleteOffer($rowId): void
   {
-    $event = Event::find($rowId);
-    $event->delete();
+    $offer = Offering::find($rowId);
+    $offer->delete();
   }
 
-  public function actions(Event $row): array
+  public function actions(Offering $row): array
   {
     return [
+
       Button::add('edit')
         ->slot('Edit')
         ->class('btn btn-warning')
-        ->route('events.edit', ['event' => $row->id]),
+        ->route('offerings.edit', ['offering' => $row->id], '_blank'),
 
       Button::add('delete')
         ->slot('Delete')
         ->id()
         ->class('btn btn-danger')
         ->confirm('Do you wish to delete this record?')
-        ->dispatch('deleteEvent', ['rowId' => $row->id])
+        ->dispatch('deleteOffer', ['rowId' => $row->id])
     ];
   }
 

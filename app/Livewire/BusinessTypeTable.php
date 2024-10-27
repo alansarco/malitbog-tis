@@ -70,8 +70,8 @@ final class BusinessTypeTable extends PowerGridComponent
     $this->js('alert(' . $rowId . ')');
   }
 
-  #[\Livewire\Attributes\On('delete')]
-  public function delete($rowId): void
+  #[\Livewire\Attributes\On('deleteType')]
+  public function deleteType($rowId): void
   {
     $businessType = BusinessType::find($rowId);
     $businessType->delete();
@@ -91,7 +91,7 @@ final class BusinessTypeTable extends PowerGridComponent
         ->id()
         ->class('btn btn-danger')
         ->confirm('Do you wish to delete this record?')
-        ->dispatch('delete', ['rowId' => $row->id])
+        ->dispatch('deleteType', ['rowId' => $row->id])
     ];
   }
 
