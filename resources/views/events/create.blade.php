@@ -1,6 +1,6 @@
 @extends('layouts/layoutWithScript')
 
-@section('title', 'Create Business Type')
+@section('title', 'Create Business Event')
 
 @section('content')
     <div class="row">
@@ -15,7 +15,7 @@
                 </div>
                 <div class="card mb-6">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Business Type Information</h5>
+                        <h5 class="mb-0">Business Event Information</h5>
                     </div>
                     <div class="card-body">
                         <div class="mb-6">
