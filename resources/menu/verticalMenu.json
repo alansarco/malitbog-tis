@@ -80,19 +80,19 @@
       ]
     },
     {
-      "name": "Establishment Offerings",
+      "name": "Establishment Offers",
       "icon": "menu-icon tf-icons bx bx-list-minus",
       "slug": "offerings",
       "permission": ["admin"],
       "submenu": [
         {
           "url": "/offerings",
-          "name": "List of Offerings",
+          "name": "List of Offers",
           "slug": "offerings.index"
         },
         {
           "url": "/offerings/create",
-          "name": "Create Establishment Offering",
+          "name": "Create Establishment Offer",
           "slug": "offerings.create"
         }
       ]
@@ -105,17 +105,17 @@
       "permission": ["owner"]
     },
     {
-      "url": "/dashboard",
+      "url": "/offers",
       "name": "Establishment Offers",
       "icon": "menu-icon tf-icons bx bx-list-minus",
-      "slug": "establishment",
+      "slug": "owners.establishment-offers",
       "permission": ["owner"]
     },
     {
-      "url": "/dashboard",
+      "url": "/my-galleries",
       "name": "Establishment Galleries",
       "icon": "menu-icon tf-icons bx bx-images",
-      "slug": "establishment",
+      "slug": "owners.establishment-galleries",
       "permission": ["owner"]
     }
   ]
