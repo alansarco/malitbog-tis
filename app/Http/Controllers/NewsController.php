@@ -20,6 +20,13 @@ class NewsController extends Controller
   public function store(Request $request)
   {
     $request->validate(['title' => 'required', 'description' => 'required']);
+
+    News::create([
+      'title' => $request->title,
+      'description' => $request->description
+    ]);
+
+    return redirect(route('news.index'));
   }
 
   public function edit(News $news)
@@ -30,5 +37,12 @@ class NewsController extends Controller
   public function update(Request $request, News $news)
   {
     $request->validate(['title' => 'required', 'description' => 'required']);
+
+    $news->update([
+      'title' => $request->title,
+      'description' => $request->description
+    ]);
+
+    return redirect(route('news.index'));
   }
 }
