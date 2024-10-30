@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
   Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
   Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+
+
   Route::middleware('role:admin')->group(function () {
     Route::resource('accounts', AccountController::class);
     Route::resource('establishments', EstablishmentController::class);
