@@ -47,9 +47,4 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/my-galleries', [OwnerGalleryController::class, 'index'])->name('owners.establishment-galleries');
   });
-
-  //new route -clint task
-  Route::post('/accounts', [EstablishmentController::class, 'storeOwnerWithEstablishment'])->name('accounts.store');
-  Route::put('/accounts/{id}', [AccountController::class, 'update'])->name('accounts.update');
-
 });
