@@ -17,6 +17,7 @@ use App\Http\Controllers\OwnerGalleryController;
 // New Routes
 Route::middleware('guest')->group(function () {
   Route::get('/', fn() => view('welcome'))->name('root');
+  Route::get('/history', fn() => view('history'))->name('history');
   Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'login')->name('login');
     Route::post('/login', 'authenticate');
