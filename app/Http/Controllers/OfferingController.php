@@ -37,7 +37,7 @@ class OfferingController extends Controller
     ]);
 
     if ($request->has('image')) {
-      $path = Storage::putFile('/offers', $request->file);
+      $path = Storage::put('/public/offers', $request->image);
       $offer->update(['path' => $path]);
     }
 

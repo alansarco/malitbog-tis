@@ -1,6 +1,6 @@
 <div class="d-flex flex-column">
     <span>Owner Name</span>
-    <h5>{{ $establishment->owner->name }}</h5>
+    <h5>{{ $establishment?->owner?->name }}</h5>
 </div>
 
 <div class="d-flex flex-column">
