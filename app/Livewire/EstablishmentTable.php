@@ -49,7 +49,7 @@ final class EstablishmentTable extends PowerGridComponent
   public function fields(): PowerGridFields
   {
     return PowerGrid::fields()
-      ->add('owner_name', fn($establishment) => e($establishment->owner->name))
+      ->add('owner_name', fn($establishment) => e($establishment?->owner?->name))
       ->add('name')
       ->add('description')
       ->add('address')

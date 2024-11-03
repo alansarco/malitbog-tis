@@ -8,6 +8,7 @@ use App\Models\BusinessType;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Establishment;
+use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
@@ -24,28 +25,30 @@ class AccountController extends Controller
   }
 
   public function store(AccountStoreRequest $request)
-    {
-        // Create a new user
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+  {
+    $role = Role::whereNot('name', 'admin')->first();
+    // Create a new user
+    $user = User::create([
+      'role_id' => $role->id,
+      'name' => $request->name,
+      'email' => $request->email,
+      'password' => Hash::make($request->password),
+    ]);
 
-        // Create the establishment
-        Establishment::create([
-            'user_id' => $user->id,
-            'name' => $request->establishment_name,
-            'description' => $request->establishment_description,
-            'address' => $request->establishment_address,
-            'mode_of_access' => $request->establishment_mode_of_access,
-            'contact_number' => $request->establishment_contact_number,
-            'business_type_id' => $request->establishment_type_of_business,
-        ]);
+    // Create the establishment
+    Establishment::create([
+      'user_id' => $user->id,
+      'name' => $request->establishment_name,
+      'description' => $request->establishment_description,
+      'address' => $request->establishment_address,
+      'mode_of_access' => implode(', ', $request->establishment_mode_of_access),
+      'contact_number' => $request->establishment_contact_number,
+      'business_type_id' => $request->establishment_type_of_business,
+    ]);
 
-        // Redirect back to /accounts
-        return redirect('/accounts')->with('success', 'Establishment owner and establishment created successfully.');
-    }
+    // Redirect back to /accounts
+    return redirect('/accounts')->with('success', 'Establishment owner and establishment created successfully.');
+  }
 
   public function edit($id)
   {
@@ -55,31 +58,30 @@ class AccountController extends Controller
   }
 
   public function update(AccountUpdateRequest $request, $id)
-{
+  {
     // Find the user by ID
     $user = User::findOrFail($id);
 
     // Update user details
     $user->update([
-        'name' => $request->name,
-        'email' => $request->email,
-        // Only update the password if a new password is provided
-        'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
+      'name' => $request->name,
+      'email' => $request->email,
+      // Only update the password if a new password is provided
+      'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
     ]);
 
     // Update establishment details if provided
     if ($request->has('establishment_name')) {
-        $user->establishment->update([
-            'name' => $request->establishment_name,
-            'description' => $request->establishment_description,
-            'address' => $request->establishment_address,
-            'mode_of_access' => $request->establishment_mode_of_access,
-            'contact_number' => $request->establishment_contact_number,
-            'business_type_id' => $request->establishment_type_of_business,
-        ]);
+      $user->establishment->update([
+        'name' => $request->establishment_name,
+        'description' => $request->establishment_description,
+        'address' => $request->establishment_address,
+        'mode_of_access' => implode(', ', $request->establishment_mode_of_access),
+        'contact_number' => $request->establishment_contact_number,
+        'business_type_id' => $request->establishment_type_of_business,
+      ]);
     }
 
     return redirect('/accounts')->with('success', 'Account updated successfully.');
-}
-
+  }
 }

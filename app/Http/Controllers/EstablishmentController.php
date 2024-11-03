@@ -47,7 +47,7 @@ class EstablishmentController extends Controller
         'name' => $request->establishment_name,
         'description' => $request->establishment_description,
         'address' => $request->establishment_address,
-        'mode_of_access' => $request->establishment_mode_of_access,
+        'mode_of_access' => implode(', ', $request->establishment_mode_of_access),
         'contact_number' => $request->establishment_contact_number,
         'business_type_id' => $request->establishment_type_of_business,
       ]);

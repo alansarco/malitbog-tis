@@ -105,7 +105,7 @@
                         <div class="mb-6">
                             <label class="form-label" for="establishment_contact_number">Contact Number <small
                                     class="text-danger">*</small></label>
-                            <input type="text" class="form-control" id="establishment_contact_number"
+                            <input type="text" class="form-control" id="establishment_contact_number" name="establishment_contact_number"
                                 placeholder="+6391234567890" value="{{ old('establishment_contact_number') }}" />
                             @error('establishment_contact_number')
                                 <small class="text-danger">{{ $message }}</small>

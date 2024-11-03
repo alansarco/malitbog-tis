@@ -4,7 +4,7 @@
 
 
 @section('content')
-    @include('sections.navbar')
+    <x-navbar />
 
     <style>
         .image-zoomer {
@@ -69,8 +69,8 @@
         }
 
         .text-dark {
-          text-align: justify;
-          text-justify: inter-word;
+            text-align: justify;
+            text-justify: inter-word;
         }
     </style>
 

@@ -12,6 +12,10 @@ class Event extends Model
 
   protected $guarded = [];
 
+  protected $casts = [
+    'date' => 'date',
+  ];
+
   public function establishment()
   {
     return $this->belongsTo(Establishment::class, 'establishment_id');

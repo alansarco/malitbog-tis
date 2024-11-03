@@ -16,7 +16,7 @@ return new class extends Migration
       $table->id();
       $table->unsignedBigInteger('role_id');
       $table->string('name');
-      $table->string('email')->unique();
+      $table->string('email');
       $table->string('status')->default(StatusEnum::ACTIVE);
       // $table->timestamp('email_verified_at')->nullable();
       $table->string('password');

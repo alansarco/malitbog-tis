@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AccountStoreRequest extends FormRequest
 {
@@ -23,7 +24,13 @@ class AccountStoreRequest extends FormRequest
   {
     return [
       'name' => 'required',
-      'email' => 'required|unique:users,email,deleted_at,NULL',
+      'email' => [
+        'required',
+        'email',
+        Rule::unique('users')->where(function ($query) {
+          return $query->whereNull('deleted_at');
+        }),
+      ],
       'password' => 'required|confirmed|min:8',
       'establishment_name' => 'required',
       'establishment_description' => 'required',
