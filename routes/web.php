@@ -30,6 +30,10 @@ Route::middleware('guest')->group(function () {
   Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'login')->name('login');
     Route::post('/login', 'authenticate');
+    Route::get('/forgot-password', 'forgotPassword')->name('password.request');
+    Route::post('/forgot-password', 'forgotPasswordEvent')->name('password.email');
+    Route::get('/reset-password/{token}', 'passwordResetForm')->name('password.reset');
+    Route::post('/reset-password', 'passwordUpdate')->name('password.update');
   });
 });
 

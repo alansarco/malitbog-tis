@@ -11,7 +11,7 @@
 
             <section class="col">
                 <h2 class="text-3xl font-bold text-center mb-8">Map</h2>
-                <div id="map" class="h-[500px]"></div>
+                <div id="map" class="h-100"></div>
             </section>
 
         </div>
@@ -27,7 +27,7 @@
 
     <script>
         var latitude = {{ $establishment?->geolocation_latitude ?? '10.158163827849396' }};
-        var longitude = {{ $establishment?->geolocation_longitude ?? '125.00094211920187'  }};
+        var longitude = {{ $establishment?->geolocation_longitude ?? '125.00094211920187' }};
 
         var map = L.map('map', {
             center: [latitude, longitude],

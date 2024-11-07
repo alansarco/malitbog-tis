@@ -22,6 +22,15 @@
                         <!-- /Logo -->
                         <h4 class="text-center">Malitbog Tourism Website</h4>
 
+
+                        @if (session()->has('status'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session()->get('status') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
+
                         <form id="formAuthentication" class="mb-6" action="{{ url('/login') }}" method="POST">
                             @csrf
                             <div class="mb-6">
@@ -42,15 +51,15 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="mb-8">
+                            <div class="mb-8">
                                 <div class="d-flex justify-content-between mt-8">
                                     <div class="form-check mb-0 ms-2">
                                     </div>
-                                    <a href="{{ url('auth/forgot-password-basic') }}">
+                                    <a href="{{ url('/forgot-password') }}">
                                         <span>Forgot Password?</span>
                                     </a>
                                 </div>
-                            </div> --}}
+                            </div>
 
                             <div class="mb-6">
                                 <button class="btn btn-primary d-grid w-100" type="submit">Login</button>

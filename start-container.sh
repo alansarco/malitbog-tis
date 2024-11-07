@@ -27,7 +27,5 @@ else
     echo "No updates found. Your dependencies are up to date."
 fi
 
-php artisan migrate
-
 # Run apache foreground
 apachectl -D FOREGROUND
