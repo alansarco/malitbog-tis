@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Establishment;
 use App\Models\Gallery;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -20,6 +21,8 @@ final class EstablishmentGalleryTable extends PowerGridComponent
 {
   use WithExport;
 
+  public Establishment $establishment;
+
   public string $tableName = 'EstablishmentGalleryTable';
 
   public function setUp(): array
@@ -34,7 +37,7 @@ final class EstablishmentGalleryTable extends PowerGridComponent
 
   public function datasource(): Builder
   {
-    return Gallery::query();
+    return Gallery::query()->when($this->establishment, fn($query) => $query->where('establishment_id', $this->establishment->id));
   }
 
   public function relationSearch(): array

@@ -47,4 +47,9 @@ class Establishment extends Model
   {
     return $this->hasMany(Gallery::class, 'establishment_id');
   }
+
+  public function reviews()
+  {
+    return $this->hasMany(Review::class, 'establishment_id');
+  }
 }

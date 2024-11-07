@@ -8,12 +8,67 @@
 
 
         <div class="row">
-
-            <section class="col">
-                <h2 class="text-3xl font-bold text-center mb-8">Map</h2>
-                <div id="map" class="h-100"></div>
+            <section class="col-3">
+                <div id="map" style="height: 500px; width:350px"></div>
             </section>
 
+            <section class="col-4 text-center">
+                <b>
+                    <h5>Overview</h5>
+                </b>
+                <span>{{ $establishment->description }}</span>
+            </section>
+
+            <section class="col-3 overflow-auto d-flex flex-column gap-3" style="height: 500px;">
+                @forelse ($establishment->galleries as $gallery)
+                    <div class="card shadow rounded p-3">
+                        <img class="w-100" src="{{ App\Helpers\ImagePathHelper::normalizePath($gallery->path) }}">
+                    </div>
+                @empty
+                    <img src="https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg"
+                        alt="" class="w-100">
+                @endforelse
+            </section>
+        </div>
+
+
+        <div class="row">
+            <section class="col-3">
+                <h5>Access:</h5>
+                <div class="d-flex flex-column gap-2">
+                    {{ $establishment->mode_of_access }}
+                </div>
+            </section>
+
+            <section class="col-4">
+                <b class="text-center">
+                    <h5>Accomodations:</h5>
+                </b>
+                <div class="d-flex flex-column gap-3 p-2 overflow-auto d-flex" style="height: 500px;">
+                    @forelse ($establishment->offerings as $offer)
+                        <div class="card shadow rounded p-1">
+                            <div class="card-header">
+                                {{ $offer->name }}
+                            </div>
+                            <div class="card-body">
+                                <section style="height: 300px;" class="overflow-auto">
+                                    {!! $offer->description !!}
+                                </section>
+                            </div>
+                        </div>
+                    @empty
+                    @endforelse
+                </div>
+            </section>
+
+            <section class="col-3  flex-column gap-3">
+                <b class="text-center">
+                    <h5>Comments:</h5>
+                </b>
+                <div class="d-flex flex-column gap-3 p-2 overflow-auto d-flex" style="height: 500px;">
+                    <livewire:review establishmentId="{{ $establishment->id }}" />
+                </div>
+            </section>
         </div>
     </div>
 

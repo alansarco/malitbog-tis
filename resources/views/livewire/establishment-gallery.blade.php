@@ -25,6 +25,6 @@
     </div>
 
     <livewire:table-refresher tableName='EstablishmentGalleryTable'>
-        <livewire:establishment-gallery-table />
+        <livewire:establishment-gallery-table :establishment=$establishment />
     </livewire:table-refresher>
 </div>
