@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
 
 class AccountUpdateRequest extends FormRequest
 {
@@ -23,8 +25,8 @@ class AccountUpdateRequest extends FormRequest
   {
     return [
       'name' => 'required',
-      'email' => 'required|unique:users,email,' . $this->account . ',deleted_at,NULL',
-      'password' => 'required|confirmed|min:8',
+      'email' => ['required', 'email', Rule::unique('users')->where(fn ($query) => $query->whereNull('deleted_at')->whereNot('id', $this->account))],
+      'password' => 'nullable|confirmed|min:8',
       'establishment_name' => 'required',
       'establishment_description' => 'required',
       'establishment_address' => 'required',

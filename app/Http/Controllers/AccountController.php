@@ -70,17 +70,15 @@ class AccountController extends Controller
       'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
     ]);
 
-    // Update establishment details if provided
-    if ($request->has('establishment_name')) {
-      $user->establishment->update([
-        'name' => $request->establishment_name,
-        'description' => $request->establishment_description,
-        'address' => $request->establishment_address,
-        'mode_of_access' => implode(', ', $request->establishment_mode_of_access),
-        'contact_number' => $request->establishment_contact_number,
-        'business_type_id' => $request->establishment_type_of_business,
-      ]);
-    }
+
+    $user->establishment->update([
+      'name' => $request->establishment_name,
+      'description' => $request->establishment_description,
+      'address' => $request->establishment_address,
+      'mode_of_access' => implode(', ', $request->establishment_mode_of_access),
+      'contact_number' => $request->establishment_contact_number,
+      'business_type_id' => $request->establishment_type_of_business,
+    ]);
 
     return redirect('/accounts')->with('success', 'Account updated successfully.');
   }
