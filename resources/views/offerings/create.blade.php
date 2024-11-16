@@ -12,6 +12,12 @@
                         <i class="bx bx-plus"></i>
                         Save
                     </button>
+                    <button class="btn btn-secondary d-flex gap-1 ms-2">
+                        <a href="{{ route('offerings.index') }}" class="text-white">
+                            <i class="bx bx-arrow-back"></i>
+                            Back
+                        </a>
+                    </button>
                 </div>
                 <div class="card mb-6">
                     <div class="card-header d-flex justify-content-between align-items-center">

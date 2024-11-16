@@ -1,3 +1,4 @@
+
 <div class="d-flex flex-column">
     <span>Owner Name</span>
     <h5>{{ $establishment?->owner?->name }}</h5>

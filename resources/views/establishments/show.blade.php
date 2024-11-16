@@ -35,6 +35,18 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-end">
+                    <button class="btn btn-secondary d-flex gap-1 ms-2">
+                    <a href="{{ route('establishments.index') }}" class="text-white">
+                        <i class="bx bx-arrow-back"></i>
+                        Back
+                    </a>
+                </button>
+                </div>
+                
+            </div>
+            
         </div>
     </div>
 

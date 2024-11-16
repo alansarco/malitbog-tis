@@ -37,13 +37,12 @@ class EventController extends Controller
       ])
     ]);
 
-    return redirect(route('events.index'));
+    return redirect('/events')->with('success', 'Events added successfully.');
   }
 
   public function edit(Event $event)
   {
     $establishments = Establishment::get();
-
     return view('events.edit', compact('event', 'establishments'));
   }
 
@@ -65,6 +64,7 @@ class EventController extends Controller
       ])
     ]);
 
-    return redirect(route('events.index'));
+    return redirect('/events')->with('update', 'Events updated successfully.');
+
   }
 }

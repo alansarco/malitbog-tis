@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Event;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
@@ -34,7 +35,14 @@ final class EstablishmentEventTable extends PowerGridComponent
 
   public function datasource(): Builder
   {
-    return Event::query();
+    return Event::query()
+    ->leftJoin('establishments', 'events.establishment_id', '=', 'establishments.id')
+    ->select(
+        'events.*',
+        'establishments.name as establishment_name',
+        DB::raw("DATE_FORMAT(events.created_at, '%M %d, %Y %h:%i %p') as formatted_publish_date"),
+        DB::raw("DATE_FORMAT(events.date, '%M %d, %Y') as formatted_date")
+    );
   }
 
   public function relationSearch(): array
@@ -45,7 +53,7 @@ final class EstablishmentEventTable extends PowerGridComponent
   public function fields(): PowerGridFields
   {
     return PowerGrid::fields()
-      ->add('establishment', fn($event) => e($event->establishment->name))
+      ->add('establishment_name')
       ->add('title')
       ->add('date')
       ->add('created_at');
@@ -54,10 +62,10 @@ final class EstablishmentEventTable extends PowerGridComponent
   public function columns(): array
   {
     return [
-      Column::make('Establishment Name', 'establishment'),
+      Column::make('Establishment Name', 'establishment_name'),
       Column::make('Title', 'title'),
-      Column::make('Date', 'date'),
-      Column::make('Published Date', 'created_at'),
+      Column::make('Date', 'formatted_date'),
+      Column::make('Published Date', 'formatted_publish_date'),
 
       Column::action('Action')
     ];
@@ -77,8 +85,13 @@ final class EstablishmentEventTable extends PowerGridComponent
   #[\Livewire\Attributes\On('deleteEvent')]
   public function deleteEvent($rowId): void
   {
-    $event = Event::find($rowId);
-    $event->delete();
+    $event = Event::where('id', $rowId)->delete();
+    if ($event) {
+        $this->dispatch('eventDeleted');  // Notify frontend that deletion was successful
+    }
+    else {
+      $this->dispatch('eventNotDeleted'); 
+    }
   }
 
   public function actions(Event $row): array
@@ -86,16 +99,21 @@ final class EstablishmentEventTable extends PowerGridComponent
     return [
       Button::add('edit')
         ->slot('Edit')
-        ->class('btn btn-warning')
+        ->class('btn btn-success btn-sm')
         ->route('events.edit', ['event' => $row->id]),
 
       Button::add('delete')
         ->slot('Delete')
-        ->id()
-        ->class('btn btn-danger')
-        ->confirm('Do you wish to delete this record?')
+        ->class('btn btn-danger btn-sm')
         ->dispatch('deleteEvent', ['rowId' => $row->id])
+        ->dispatch('confirmDeleteEvent', ['rowId' => $row->id])
+
     ];
+  }
+
+  public function confirmDeleteEvent($rowId)
+  {
+      $this->emit('showDeleteConfirmation', $rowId);  // Emit the event to Blade to trigger SweetAlert
   }
 
   /*

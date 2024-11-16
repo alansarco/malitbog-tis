@@ -12,9 +12,9 @@ class Event extends Model
 
   protected $guarded = [];
 
-  protected $casts = [
-    'date' => 'date',
-  ];
+  // protected $casts = [
+  //   'date' => 'date',
+  // ];
 
   public function establishment()
   {

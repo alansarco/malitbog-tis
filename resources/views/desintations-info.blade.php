@@ -1,4 +1,4 @@
-@extends('layouts/guestLayoutWithScript')
+@extends('layouts/blankLayout')
 
 @section('content')
     <x-navbar />
@@ -9,7 +9,7 @@
 
         <div class="row">
             <section class="col-3">
-                <div id="map" style="height: 500px; width:350px"></div>
+                <div id="map" style="height: 500px; width:300px"></div>
             </section>
 
             <section class="col-4 text-center">
@@ -19,7 +19,7 @@
                 <span>{{ $establishment->description }}</span>
             </section>
 
-            <section class="col-3 overflow-auto d-flex flex-column gap-3" style="height: 500px;">
+            <section class="col-3 overflow-auto d-flex flex-column gap-3" style="height: 900px;">
                 @forelse ($establishment->galleries as $gallery)
                     <div class="card shadow rounded p-3">
                         <img class="w-100" src="{{ App\Helpers\ImagePathHelper::normalizePath($gallery->path) }}">
@@ -124,7 +124,7 @@
                 [latitude, longitude]
             ];
             var polyline = L.polyline(latlngs, {
-                color: 'blue'
+                color: 'red'
             }).addTo(map);
 
             // Fit the map to the bounds of the polyline

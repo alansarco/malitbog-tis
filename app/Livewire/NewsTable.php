@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\News;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
@@ -34,7 +35,8 @@ final class NewsTable extends PowerGridComponent
 
   public function datasource(): Builder
   {
-    return News::query();
+    return News::query()
+      ->select( '*', DB::raw("DATE_FORMAT(created_at, '%M %d, %Y %h:%i %p') as formatted_date"));
   }
 
   public function relationSearch(): array
@@ -56,7 +58,7 @@ final class NewsTable extends PowerGridComponent
         ->sortable()
         ->searchable(),
 
-      Column::make('Published Date', 'created_at')
+      Column::make('Published Date', 'formatted_date')
         ->sortable()
         ->searchable(),
 
@@ -75,11 +77,16 @@ final class NewsTable extends PowerGridComponent
     $this->js('alert(' . $rowId . ')');
   }
 
-  #[\Livewire\Attributes\On('delete')]
-  public function delete($rowId): void
+  #[\Livewire\Attributes\On('deleteNews')]
+  public function deleteNews($rowId): void
   {
-    $news = News::find($rowId);
-    $news->delete();
+    $news = News::where('id', $rowId)->delete();
+    if ($news) {
+        $this->dispatch('newsDeleted');  // Notify frontend that deletion was successful
+    }
+    else {
+      $this->dispatch('newsNotDeleted'); 
+    }
   }
 
   public function actions(News $row): array
@@ -87,18 +94,20 @@ final class NewsTable extends PowerGridComponent
     return [
       Button::add('edit')
         ->slot('Edit')
-        ->class('btn btn-warning')
+        ->class('btn btn-success btn-sm')
         ->route('news.edit', ['news' => $row->id], '_blank'),
 
       Button::add('delete')
         ->slot('Delete')
-        ->id()
-        ->class('btn btn-danger')
-        ->confirm('Do you wish to delete this record?')
-        ->dispatch('delete', ['rowId' => $row->id])
+        ->class('btn btn-danger btn-sm')
+        ->dispatch('confirmDeleteNews', ['rowId' => $row->id])
+
     ];
   }
-
+  public function confirmDeleteNews($rowId)
+  {
+      $this->emit('showDeleteConfirmation', $rowId);  // Emit the event to Blade to trigger SweetAlert
+  }
   /*
     public function actionRules($row): array
     {

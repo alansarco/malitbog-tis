@@ -97,28 +97,35 @@ final class EstablishmentOfferingTable extends PowerGridComponent
     $this->js('alert(' . $rowId . ')');
   }
 
-  #[\Livewire\Attributes\On('deleteOffer')]
-  public function deleteOffer($rowId): void
+  #[\Livewire\Attributes\On('deleteOffering')]
+  public function deleteOffering($rowId): void
   {
-    $offer = Offering::find($rowId);
-    $offer->delete();
+    $offer = Offering::where('id', $rowId)->delete();
+    if ($offer) {
+        $this->dispatch('offeringDeleted');  // Notify frontend that deletion was successful
+    }
+    else {
+      $this->dispatch('offeringNotDeleted'); 
+    }
   }
-
+  public function confirmDeleteOffering($rowId)
+  {
+      $this->emit('showDeleteConfirmation', $rowId);  // Emit the event to Blade to trigger SweetAlert
+  }
   public function actions(Offering $row): array
   {
     return [
 
       Button::add('edit')
         ->slot('Edit')
-        ->class('btn btn-warning')
+        ->class('btn btn-success btn-sm')
         ->route('offerings.edit', ['offering' => $row->id], '_blank'),
 
       Button::add('delete')
         ->slot('Delete')
-        ->id()
-        ->class('btn btn-danger')
-        ->confirm('Do you wish to delete this record?')
-        ->dispatch('deleteOffer', ['rowId' => $row->id])
+        ->class('btn btn-danger btn-sm')
+        ->dispatch('confirmDeleteOffering', ['rowId' => $row->id])
+
     ];
   }
 

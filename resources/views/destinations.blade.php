@@ -1,4 +1,4 @@
-@extends('layouts/guestLayoutWithScript')
+@extends('layouts/blankLayout')
 
 @section('content')
     <x-navbar />

@@ -18,6 +18,7 @@ use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use Illuminate\Support\Str;
 use PowerComponents\LivewirePowerGrid\Facades\Rule;
+use PowerComponents\LivewirePowerGrid\Table;
 
 final class UserTable extends PowerGridComponent
 {
@@ -39,8 +40,10 @@ final class UserTable extends PowerGridComponent
 
   public function datasource(): Builder
   {
-    return User::with('role')
-      ->whereHas('role', fn($query) => $query->whereNot('name', 'admin'))
+    return User::leftJoin('roles', 'users.role_id', 'roles.id')
+      ->select('users.*', 'roles.name as role_name')
+      ->where('role_id', 2)
+      // ->whereHas('role', fn($query) => $query->whereNot('name', 'admin'))
     ;
   }
 
@@ -94,10 +97,20 @@ final class UserTable extends PowerGridComponent
   #[\Livewire\Attributes\On('deleteUser')]
   public function deleteUser($rowId): void
   {
-    $user = User::find($rowId);
-    $user->delete();
+    $user = User::where('id', $rowId)->delete();
+    if ($user) {
+        $this->dispatch('userDeleted');  // Notify frontend that deletion was successful
+    }
+    else {
+      $this->dispatch('userNotDeleted'); 
+    }
   }
 
+
+  public function confirmDeleteUser($rowId)
+  {
+      $this->emit('showDeleteConfirmation', $rowId);  // Emit the event to Blade to trigger SweetAlert
+  }
 
 
   public function actions(User $row): array
@@ -106,15 +119,14 @@ final class UserTable extends PowerGridComponent
 
       Button::add('edit')
         ->slot('Edit')
-        ->class('btn btn-warning')
+        ->class('btn btn-success btn-sm')
         ->route('accounts.edit', ['account' => $row->id], '_blank'),
 
-      Button::add('delete')
+       // Trigger confirmation in Livewire
+       Button::add('confirmDelete')
         ->slot('Delete')
-        ->id()
-        ->class('btn btn-danger')
-        ->confirm('Do you wish to delete this record?')
-        ->dispatch('deleteUser', ['rowId' => $row->id])
+        ->class('btn btn-danger btn-sm')
+        ->dispatch('confirmDeleteUser', ['rowId' => $row->id])
     ];
   }
 

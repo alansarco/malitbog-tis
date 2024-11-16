@@ -36,8 +36,9 @@
     </div>
 @endif
 
-<div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
 
+<div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+    <h5 class="my-auto text-uppercase">Malitbog Tourism Office </h5>
     <ul class="navbar-nav flex-row align-items-center ms-auto">
 
         <!-- User -->

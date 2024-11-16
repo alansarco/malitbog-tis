@@ -70,11 +70,22 @@ final class BusinessTypeTable extends PowerGridComponent
     $this->js('alert(' . $rowId . ')');
   }
 
-  #[\Livewire\Attributes\On('deleteType')]
-  public function deleteType($rowId): void
+  #[\Livewire\Attributes\On('deleteBusinessType')]
+  public function deleteBusinessType($rowId): void
   {
-    $businessType = BusinessType::find($rowId);
-    $businessType->delete();
+    $businessType = BusinessType::where('id', $rowId)->delete();
+    if ($businessType) {
+        $this->dispatch('businesstypeDeleted');  // Notify frontend that deletion was successful
+    }
+    else {
+      $this->dispatch('businesstypeNotDeleted'); 
+    }
+    
+  }
+
+  public function confirmDeleteBusinessType($rowId)
+  {
+      $this->emit('showDeleteConfirmation', $rowId);  // Emit the event to Blade to trigger SweetAlert
   }
 
   public function actions(BusinessType $row): array
@@ -83,15 +94,14 @@ final class BusinessTypeTable extends PowerGridComponent
 
       Button::add('edit')
         ->slot('Edit')
-        ->class('btn btn-warning')
+        ->class('btn btn-success btn-sm')
         ->route('business-types.edit', ['business_type' => $row->id], '_blank'),
 
       Button::add('delete')
         ->slot('Delete')
-        ->id()
-        ->class('btn btn-danger')
-        ->confirm('Do you wish to delete this record?')
-        ->dispatch('deleteType', ['rowId' => $row->id])
+        ->class('btn btn-danger btn-sm')
+        ->dispatch('confirmDeleteBusinessType', ['rowId' => $row->id])
+
     ];
   }
 

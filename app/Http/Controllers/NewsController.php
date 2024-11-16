@@ -26,7 +26,8 @@ class NewsController extends Controller
       'description' => $request->description
     ]);
 
-    return redirect(route('news.index'));
+    return redirect('/news')->with('success', 'News added successfully.');
+
   }
 
   public function edit(News $news)
@@ -43,6 +44,7 @@ class NewsController extends Controller
       'description' => $request->description
     ]);
 
-    return redirect(route('news.index'));
+    return redirect('/news')->with('update', 'News added successfully.');
+
   }
 }

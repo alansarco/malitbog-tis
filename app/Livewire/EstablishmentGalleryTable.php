@@ -6,6 +6,7 @@ use App\Models\Establishment;
 use App\Models\Gallery;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
@@ -37,7 +38,14 @@ final class EstablishmentGalleryTable extends PowerGridComponent
 
   public function datasource(): Builder
   {
-    return Gallery::query()->when($this->establishment, fn($query) => $query->where('establishment_id', $this->establishment->id));
+    return Gallery::query()
+        ->select(
+            'galleries.*',
+            DB::raw("DATE_FORMAT(created_at, '%M %d, %Y %h:%i %p') as formatted_date")
+        )
+        ->when($this->establishment, function ($query) {
+            return $query->where('establishment_id', $this->establishment->id);
+        });
   }
 
   public function relationSearch(): array
@@ -67,7 +75,7 @@ final class EstablishmentGalleryTable extends PowerGridComponent
 
       Column::make('Image', 'image'),
 
-      Column::make('Published Date', 'created_at')
+      Column::make('Published Date', 'formatted_date')
         ->sortable()
         ->searchable(),
 
@@ -83,8 +91,13 @@ final class EstablishmentGalleryTable extends PowerGridComponent
   #[\Livewire\Attributes\On('deleteGallery')]
   public function deleteGallery($rowId): void
   {
-    $gallery = Gallery::find($rowId);
-    $gallery->delete();
+    $gallery = Gallery::where('id', $rowId)->delete();
+    if ($gallery) {
+        $this->dispatch('galleryDeleted');  // Notify frontend that deletion was successful
+    }
+    else {
+      $this->dispatch('galleryNotDeleted'); 
+    }
   }
 
   public function actions(Gallery $row): array
@@ -92,10 +105,8 @@ final class EstablishmentGalleryTable extends PowerGridComponent
     return [
       Button::add('delete')
         ->slot('Delete')
-        ->id()
-        ->class('btn btn-danger')
-        ->confirm('Do you wish to delete this record?')
-        ->dispatch('deleteGallery', ['rowId' => $row->id])
+        ->class('btn btn-danger btn-sm')
+        ->dispatch('confirmDeleteGallery', ['rowId' => $row->id])
     ];
   }
 

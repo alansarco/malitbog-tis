@@ -40,6 +40,9 @@ class AccountController extends Controller
       'user_id' => $user->id,
       'name' => $request->establishment_name,
       'description' => $request->establishment_description,
+      'description' => $request->establishment_description,
+      'geolocation_longitude' => $request->establishment_geolocation_latitude,
+      'geolocation_latitude' => $request->establishment_geolocation_longitude,
       'address' => $request->establishment_address,
       'mode_of_access' => implode(', ', $request->establishment_mode_of_access),
       'contact_number' => $request->establishment_contact_number,
@@ -47,7 +50,7 @@ class AccountController extends Controller
     ]);
 
     // Redirect back to /accounts
-    return redirect('/accounts')->with('success', 'Establishment owner and establishment created successfully.');
+    return redirect('/accounts')->with('success', 'Establishment owner and establishment created successfully!');
   }
 
   public function edit($id)
@@ -76,10 +79,12 @@ class AccountController extends Controller
       'description' => $request->establishment_description,
       'address' => $request->establishment_address,
       'mode_of_access' => implode(', ', $request->establishment_mode_of_access),
+      'geolocation_longitude' => $request->establishment_geolocation_latitude,
+      'geolocation_latitude' => $request->establishment_geolocation_longitude,
       'contact_number' => $request->establishment_contact_number,
       'business_type_id' => $request->establishment_type_of_business,
     ]);
 
-    return redirect('/accounts')->with('success', 'Account updated successfully.');
+    return redirect('/accounts')->with('update', 'Account updated successfully.');
   }
 }

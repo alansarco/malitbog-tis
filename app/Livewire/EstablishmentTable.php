@@ -47,18 +47,19 @@ final class EstablishmentTable extends PowerGridComponent
   }
 
   public function fields(): PowerGridFields
-  {
+{
     return PowerGrid::fields()
-      ->add('owner_name', fn($establishment) => e($establishment?->owner?->name))
-      ->add('name')
-      ->add('description')
-      ->add('address')
-      ->add('geolocation', fn($establishment) => e($establishment->geolocation_longitude . ' - ' . $establishment->geolocation_latitude))
-      ->add('mode_of_access')
-      ->add('contact_number')
-      ->add('business_type_id', fn($establishment) => e($establishment->businessType->name))
-      ->add('status', fn($establishment) => e(Str::title($establishment->status)));
-  }
+        ->add('owner_name', fn($establishment) => e($establishment?->owner?->name ?? 'N/A'))
+        ->add('name')
+        ->add('description')
+        ->add('address')
+        ->add('geolocation', fn($establishment) => e(($establishment->geolocation_longitude ?? 'N/A') . ' - ' . ($establishment->geolocation_latitude ?? 'N/A')))
+        ->add('mode_of_access')
+        ->add('contact_number')
+        ->add('business_type_id', fn($establishment) => e($establishment->businessType->name ?? 'N/A'))
+        ->add('status', fn($establishment) => e(Str::title($establishment->status ?? 'N/A')));
+}
+
 
   public function columns(): array
   {
@@ -118,6 +119,10 @@ final class EstablishmentTable extends PowerGridComponent
         ->optionValue('name')
     ];
   }
+  public function confirmDeleteEstablishment($rowId)
+  {
+      $this->emit('showDeleteConfirmation', $rowId);  // Emit the event to Blade to trigger SweetAlert
+  }
 
   #[\Livewire\Attributes\On('edit')]
   public function edit($rowId): void
@@ -128,8 +133,13 @@ final class EstablishmentTable extends PowerGridComponent
   #[\Livewire\Attributes\On('deleteEstablishment')]
   public function deleteEstablishment($rowId): void
   {
-    $establishment = Establishment::find($rowId);
-    $establishment->delete();
+    $establishment = Establishment::where('id', $rowId)->delete();
+    if ($establishment) {
+        $this->dispatch('establishmentDeleted');  // Notify frontend that deletion was successful
+    }
+    else {
+      $this->dispatch('establishmentNotDeleted'); 
+    }
   }
 
   public function actions(Establishment $row): array
@@ -137,20 +147,19 @@ final class EstablishmentTable extends PowerGridComponent
     return [
       Button::add('view')
         ->slot('View')
-        ->class('btn btn-info')
+        ->class('btn btn-info btn-sm')
         ->route('establishments.show', ['establishment' => $row]),
 
       Button::add('edit')
         ->slot('Edit')
-        ->class('btn btn-warning')
+        ->class('btn btn-success btn-sm')
         ->route('establishments.edit', ['establishment' => $row->id], '_blank'),
 
       Button::add('delete')
         ->slot('Delete')
-        ->id()
-        ->class('btn btn-danger')
-        ->confirm('Do you wish to delete this record?')
-        ->dispatch('deleteEstablishment', ['rowId' => $row->id])
+        ->class('btn btn-danger btn-sm')
+        ->dispatch('confirmDeleteEstablishment', ['rowId' => $row->id])
+        
     ];
   }
 

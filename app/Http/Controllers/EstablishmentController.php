@@ -36,7 +36,7 @@ class EstablishmentController extends Controller
       'establishment_description' => 'required|string',
       'establishment_address' => 'required|string|max:255',
       'establishment_contact_number' => 'required|string|max:20',
-      'establishment_mode_of_access' => 'required|string',
+      'establishment_mode_of_access' => 'required',
       'establishment_type_of_business' => 'required|exists:business_types,id'
     ]);
 
@@ -48,6 +48,8 @@ class EstablishmentController extends Controller
         'description' => $request->establishment_description,
         'address' => $request->establishment_address,
         'mode_of_access' => implode(', ', $request->establishment_mode_of_access),
+        'geolocation_longitude' => $request->establishment_geolocation_latitude,
+        'geolocation_latitude' => $request->establishment_geolocation_longitude,
         'contact_number' => $request->establishment_contact_number,
         'business_type_id' => $request->establishment_type_of_business,
       ]);
@@ -89,6 +91,6 @@ class EstablishmentController extends Controller
       'business_type_id' => $request->establishment_type_of_business
     ]);
 
-    return redirect(route('establishments.index'));
+    return redirect('/establishments')->with('update', 'Account updated successfully.');
   }
 }

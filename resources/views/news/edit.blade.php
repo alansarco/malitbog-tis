@@ -5,13 +5,20 @@
 @section('content')
     <div class="row">
         <div class="col-xl">
-            <form method="POST" action="{{ route('news.store') }}">
+            <form method="POST" action="{{ route('news.update', ['news' => $news]) }}">
+            {{-- <form method="POST" action="{{ route('news.update') }}"> --}}
                 @csrf
                 @method('PUT')
                 <div class="d-flex justify-content-end mb-3">
                     <button id="" type="submit" class="btn btn-primary d-flex gap-1">
                         <i class="bx bx-plus"></i>
                         Update
+                    </button>
+                    <button class="btn btn-secondary d-flex gap-1 ms-2">
+                        <a href="{{ route('news.index') }}" class="text-white">
+                            <i class="bx bx-arrow-back"></i>
+                            Back
+                        </a>
                     </button>
                 </div>
                 <div class="card mb-6">

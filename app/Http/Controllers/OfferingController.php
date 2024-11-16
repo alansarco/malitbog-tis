@@ -41,7 +41,8 @@ class OfferingController extends Controller
       $offer->update(['path' => $path]);
     }
 
-    return redirect(route('offerings.index'));
+    return redirect('/offerings')->with('success', 'Offering added successfully.');
+
   }
 
   public function edit(Offering $offering)
@@ -72,6 +73,6 @@ class OfferingController extends Controller
       $offering->update(['path' => $path]);
     }
 
-    return redirect(route('offerings.index'));
+    return redirect('/offerings')->with('update', 'Offering updated successfully.');
   }
 }

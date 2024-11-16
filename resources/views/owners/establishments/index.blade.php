@@ -92,11 +92,12 @@
                             @enderror
                         </div>
                         <div class="mb-6">
-                            <label class="form-label" for="establishment_type_of_business">Type of Business <small
-                                    class="text-danger">*</small></label>
-                            <input type="text" class="form-control" id="establishment_type_of_business" disabled
-                                placeholder="+6391234567890" value="{{ $establishment?->businessType->name }}" />
-                        </div>
+    <label class="form-label" for="establishment_type_of_business">Type of Business <small
+            class="text-danger">*</small></label>
+    <input type="text" class="form-control" id="establishment_type_of_business" disabled
+        placeholder="Type of Business"
+        value="{{ $establishment?->businessType?->name ?? 'N/A' }}" />
+</div>
                     </div>
                 </div>
             </form>
