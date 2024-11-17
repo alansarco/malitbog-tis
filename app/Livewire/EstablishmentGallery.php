@@ -33,7 +33,7 @@ class EstablishmentGallery extends Component
 
     $this->image = '';
     $this->name = '';
-    $this->dispatch("pg:eventRefresh-EstablishmentGalleryTable");
+    $this->dispatch("pg:eventRefresh-OwnerGalleryTable");
   }
 
   public function render()

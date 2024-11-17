@@ -1,6 +1,6 @@
 <div class="p-3">
 
-    <livewire:table-refresher tableName='EstablishmentOfferingTable'>
+    <livewire:table-refresher>
         <livewire:establishment-offering-table />
     </livewire:table-refresher>
     @livewireStyles

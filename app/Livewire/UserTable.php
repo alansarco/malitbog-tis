@@ -28,7 +28,7 @@ final class UserTable extends PowerGridComponent
 
   public function setUp(): array
   {
-    $this->showCheckBox();
+    // $this->showCheckBox();
 
     return [
       Header::make()->showSearchInput(),
@@ -82,9 +82,9 @@ final class UserTable extends PowerGridComponent
   public function filters(): array
   {
     return [
-      Filter::inputText('name'),
-      Filter::inputText('email'),
-      Filter::inputText('status'),
+      // Filter::inputText('name'),
+      // Filter::inputText('email'),
+      // Filter::inputText('status'),
     ];
   }
 

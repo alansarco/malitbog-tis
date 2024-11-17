@@ -5,7 +5,7 @@
 @section('content')
     @include('owners.offers._partials.create')
 
-    <div class="bg-white shadow rounded p-3">
+    <div class="bg-white shadow p-3 p-md-5 rounded-3">
         <livewire:table-refresher tableName='OwnerOfferingTable'>
             <livewire:owner-offer-table />
         </livewire:table-refresher>

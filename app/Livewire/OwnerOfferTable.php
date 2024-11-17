@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Offering;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
@@ -35,7 +36,15 @@ final class OwnerOfferTable extends PowerGridComponent
 
   public function datasource(): Builder
   {
-    return Offering::query()->where('establishment_id', auth()->user()->establishment->id);
+    return Offering::query()
+        ->leftJoin('establishments', 'offerings.establishment_id', '=', 'establishments.id')
+        ->leftJoin('users', 'establishments.user_id', '=', 'users.id')
+        ->where('establishments.user_id', '=', Auth::user()->id)
+        ->select(
+            'offerings.*', // All columns from the offerings table
+            'establishments.name as establishment_name', // Alias establishment's name
+            'users.name as owner_name' // Alias user's name (owner of the establishment)
+        );
   }
 
   public function relationSearch(): array
@@ -58,7 +67,10 @@ final class OwnerOfferTable extends PowerGridComponent
   public function columns(): array
   {
     return [
+      Column::make('Etablishment', 'establishment_name'),
+
       Column::make('Image', 'image'),
+
       Column::make('Name', 'name')
         ->sortable()
         ->searchable(),

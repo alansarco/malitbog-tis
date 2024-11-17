@@ -44,6 +44,19 @@
       ]
     },
     {
+      "name": "Request of Establishments",
+      "icon": "menu-icon tf-icons bx bx-store",
+      "slug": "requests",
+      "permission": ["admin"],
+      "submenu": [
+        {
+          "url": "/requests",
+          "name": "Request/Inactive List",
+          "slug": "requests.index"
+        }
+      ]
+    },
+    {
       "name": "Business Types",
       "icon": "menu-icon tf-icons bx bx-buildings",
       "slug": "business-types",

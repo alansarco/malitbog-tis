@@ -9,7 +9,7 @@
             Add
         </a>
     </div>
-    <div class="bg-white shadow rounded p-3">
+    <div class="bg-white shadow p-3 p-md-5 rounded-3">
         <livewire:establishment-table />
     </div>
     @livewireStyles
@@ -20,7 +20,7 @@
                 Livewire.on('confirmDeleteEstablishment', (rowId) => {
                     Swal.fire({
                         title: 'Are you sure?',
-                        text: 'This action cannot be undone!',
+                        text: 'The establishment will be set to inactive. You can just set it to active anytime!',
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#d33',

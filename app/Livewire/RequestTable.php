@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
@@ -24,7 +25,7 @@ use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use Illuminate\Support\Str;
 use PowerComponents\LivewirePowerGrid\Facades\Rule;
 
-final class EstablishmentTable extends PowerGridComponent
+final class RequestTable extends PowerGridComponent
 {
   use WithExport;
 
@@ -43,9 +44,9 @@ final class EstablishmentTable extends PowerGridComponent
   public function datasource(): Builder
   {
     return Establishment::query()
-      ->with('owner')
-      ->where('status', 'active')
-      ->select('*', DB::raw("DATE_FORMAT(created_at, '%M %d, %Y') as formatted_date"));
+        ->with('owner')
+        ->where('status', 'inactive')
+        ->select('*', DB::raw("DATE_FORMAT(created_at, '%M %d, %Y') as formatted_date"));
   }
 
   public function relationSearch(): array
@@ -78,10 +79,15 @@ final class EstablishmentTable extends PowerGridComponent
         ->sortable()
         ->searchable(),
 
+      Column::make('Contact', 'contact_number'),
+
       Column::make('Business Type', 'business_type_id'),
-      // Column::make('Status', 'status')
-      //   ->sortable()
-      //   ->searchable(),
+
+      Column::make('Date Requested', 'formatted_date'),
+
+      Column::make('Status', 'status')
+        ->sortable()
+        ->searchable(),
 
       Column::action('Action')
     ];
@@ -104,6 +110,11 @@ final class EstablishmentTable extends PowerGridComponent
       $this->emit('showDeleteConfirmation', $rowId);  // Emit the event to Blade to trigger SweetAlert
   }
 
+  public function confirmApproveEstablishment($rowId)
+  {
+      $this->emit('showApproveConfirmation', $rowId);  // Emit the event to Blade to trigger SweetAlert
+  }
+
   #[\Livewire\Attributes\On('edit')]
   public function edit($rowId): void
   {
@@ -113,52 +124,80 @@ final class EstablishmentTable extends PowerGridComponent
   #[\Livewire\Attributes\On('deleteEstablishment')]
   public function deleteEstablishment($rowId): void
   {
-    // $establishment = Establishment::where('id', $rowId)->delete();
-    $establishment = Establishment::where('id', $rowId)->update([ 'status' => 'inactive']);
+    $getUser = Establishment::where('id', $rowId)->first();
+    $getOwner = User::where('id', $getUser->user_id)->first();
+    $owner = $getOwner->name ?? "dear client";
+    $number = $getUser->contact_number ?? "";
+    $message = "Hello $owner, your $getUser->name establishment application has been rejected!";
+
+    $establishment = Establishment::where('id', $rowId)->delete();
+    // $establishment = DB::table('establishments')->where('id', $rowId)->delete();
     if ($establishment) {
-      $getUser = Establishment::where('id', $rowId)->first();
-      User::where('id', $getUser->user_id)->update([ 'status' => 'inactive']);
-      $this->dispatch('establishmentDeleted');  // Notify frontend that deletion was successful
+        User::where('id', $getUser->user_id)->update([ 'status' => 'active']);
+        
+        Http::asForm()->post('https://semaphore.co/api/v4/messages', [
+          'apikey' => '191998cd60101ec1f81b319a063fb06a',
+          'number' => $number,
+          'message' => $message,
+          'sender_name' => 'SNHS',
+      ]);
+        Gallery::where('establishment_id', $rowId)->delete();
+        Event::where('establishment_id', $rowId)->delete();
+        Offering::where('establishment_id', $rowId)->delete();
+        $this->dispatch('establishmentDeleted');  // Notify frontend that deletion was successful
     }
     else {
       $this->dispatch('establishmentNotDeleted'); 
     }
   }
 
+  #[\Livewire\Attributes\On('approveEstablishment')]
+  public function approveEstablishment($rowId): void
+  {
+    $update = Establishment::where('id', $rowId)->update([ 'status' => 'active']);
+    if ($update) {
+        $getUser = Establishment::where('id', $rowId)->first();
+        $getOwner = User::where('id', $getUser->user_id)->first();
+        User::where('id', $getUser->user_id)->update([ 'status' => 'active']);
+
+        $owner = $getOwner->name ?? "";
+        $number = $getUser->contact_number ?? "";
+
+        $message = "Hello $owner, your $getUser->name establishment application has been approved!";
+        
+        Http::asForm()->post('https://semaphore.co/api/v4/messages', [
+          'apikey' => '191998cd60101ec1f81b319a063fb06a',
+          'number' => $number,
+          'message' => $message,
+          'sender_name' => 'SNHS',
+      ]);
+
+        $this->dispatch('establishmentApproved');  // Notify frontend that deletion was successful
+    }
+    else {
+      $this->dispatch('establishmentNotApproved'); 
+    }
+  }
+
   public function actions(Establishment $row): array
   {
     return [
-      Button::add('view')
-        ->slot('View')
-        ->class('btn btn-info btn-sm')
-        ->route('establishments.show', ['establishment' => $row]),
+    //   Button::add('view')
+    //     ->slot('View')
+    //     ->class('btn btn-info btn-sm')
+    //     ->route('establishments.show', ['establishment' => $row]),
 
       Button::add('edit')
-        ->slot('Edit')
-        ->class('btn btn-success btn-sm')
-        ->route('establishments.edit', ['establishment' => $row->id], '_blank'),
+        ->slot('Approve')
+        ->class('btn btn-info btn-sm')
+        ->dispatch('confirmApproveEstablishment', ['rowId' => $row->id]),
+
 
       Button::add('delete')
-        ->slot('Delete')
+        ->slot('Reject')
         ->class('btn btn-danger btn-sm')
         ->dispatch('confirmDeleteEstablishment', ['rowId' => $row->id])
         
     ];
   }
-  
-
-
-  // public function actionRules($row): array
-  // {
-  //   return [
-  //     // Hide button edit for ID 1
-  //     Rule::button('edit')
-  //       ->when(fn($row) => $row->status === StatusEnum::INACTIVE->value)
-  //       ->hide(),
-
-  //     Rule::button('delete')
-  //       ->when(fn($row) => $row->status === StatusEnum::INACTIVE->value)
-  //       ->hide(),
-  //   ];
-  // }
 }

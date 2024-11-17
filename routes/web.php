@@ -15,7 +15,7 @@ use App\Http\Controllers\OfferingController;
 use App\Http\Controllers\OwnerEstablishmentController;
 use App\Http\Controllers\OwnerGalleryController;
 use App\Http\Controllers\NewsEventController;
-
+use App\Http\Controllers\RequestController;
 
 // New Routes
 Route::middleware('guest')->group(function () {
@@ -26,6 +26,8 @@ Route::middleware('guest')->group(function () {
   Route::get('/news-and-events/{type}/{id}', [NewsEventController::class, 'view'])->name('news-events-view');
   Route::get('/destinations/{type}', [GuestEstablishmentController::class, 'index'])->name('guests.destinations.index');
   Route::get('/destinations/{type}/{id}', [GuestEstablishmentController::class, 'view'])->name('guests.destinations.show');
+  Route::get('/apply', [GuestEstablishmentController::class, 'apply'])->name('apply');
+  Route::post('/apply', [GuestEstablishmentController::class, 'store'])->name('apply.store');
 
   Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'login')->name('login');
@@ -47,19 +49,24 @@ Route::middleware('auth')->group(function () {
   Route::middleware('role:admin')->group(function () {
     Route::resource('accounts', AccountController::class);
     Route::resource('establishments', EstablishmentController::class);
+    Route::resource('requests', RequestController::class);
     Route::resource('business-types', BusinessTypeController::class);
     Route::resource('events', EventController::class);
     Route::resource('offerings', OfferingController::class);
     Route::resource('news', NewsController::class);
+
+    // Route::get('requests', [EstablishmentController::class, 'requests'])->name('requests');
+    Route::get('/requests/{request}', [RequestController::class, 'show'])->name('requests.show');
   });
 
   Route::middleware('role:owner')->group(function () {
     Route::get('/my-establishment', [OwnerEstablishmentController::class, 'index'])->name('owners.establishment-index');
-    Route::put('/my-establishment', [OwnerEstablishmentController::class, 'update'])->name('owners.establishment-update');
+    Route::post('/my-establishment', [OwnerEstablishmentController::class, 'update'])->name('owners.establishment-update');
 
     Route::get('/offers', [OfferController::class, 'index'])->name('owners.establishment-offers');
     Route::post('/offers', [OfferController::class, 'store'])->name('owners.establishment-offers-store');
 
     Route::get('/my-galleries', [OwnerGalleryController::class, 'index'])->name('owners.establishment-galleries');
+    Route::post('/my-galleries', [OwnerGalleryController::class, 'store']);
   });
 });

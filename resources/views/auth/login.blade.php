@@ -8,10 +8,7 @@
       
       /* Full page background with a gradient and overlay image */
      body {
-         background: linear-gradient(45deg, #1e90ff, #ff6347, #1e90ff), url('{{ asset("assets/img/background/malitbog-background.jpg") }}');
-         background-size: cover;
-         background-repeat: no-repeat;
-         background-attachment: fixed;
+         background: linear-gradient(45deg, #1e90ff, #ff6347, #1e90ff);
      }
      
      /* Overlay to soften the background */
@@ -117,8 +114,67 @@
                     <div class="mb-6">
                         <button class="btn btn-primary d-grid w-100" type="submit">Login</button>
                     </div>
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ url('/apply') }}" class="btn btn-success rounded w-100">
+                            Apply your Establishment
+                        </a>
+                    </div>
                 </form>
             </div>
+            
         </div>
     </div>
+    @livewireStyles
+    @livewireScripts
+    @if(session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Success',
+                text: "Establishment has been added!",
+                icon: 'success',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK',
+                customClass: {
+                    title: 'alert-title',
+                    icon: 'alert-icon',
+                    confirmButton: 'alert-confirmButton',
+                    cancelButton: 'alert-cancelButton',
+                    container: 'alert-container',
+                    popup: 'alert-popup'
+                },
+            }).then(() => {
+                @php
+                    session()->forget('success');
+                @endphp
+            });
+        });
+    </script>
+    @endif
+
+    @if(session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Error',
+                text: "Something went wrong on your application!",
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK',
+                customClass: {
+                    title: 'alert-title',
+                    icon: 'alert-icon',
+                    confirmButton: 'alert-confirmButton',
+                    cancelButton: 'alert-cancelButton',
+                    container: 'alert-container',
+                    popup: 'alert-popup'
+                },
+            }).then(() => {
+                @php
+                    session()->forget('error');
+                @endphp
+            });
+        });
+    </script>
+    @endif
 @endsection

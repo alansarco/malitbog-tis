@@ -3,5 +3,5 @@
 @section('title', 'Galleries')
 
 @section('content')
-    <livewire:establishment-gallery :establishment=$establishment />
+    <livewire:owner-gallery :establishment=$establishment />
 @endsection

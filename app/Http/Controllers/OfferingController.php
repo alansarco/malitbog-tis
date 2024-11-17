@@ -16,7 +16,7 @@ class OfferingController extends Controller
 
   public function create()
   {
-    $establishments = Establishment::get();
+    $establishments = Establishment::where('status', 'active')->get();
     return view('offerings.create', compact('establishments'));
   }
 
@@ -47,7 +47,7 @@ class OfferingController extends Controller
 
   public function edit(Offering $offering)
   {
-    $establishments = Establishment::get();
+    $establishments = Establishment::where('status', 'active')->get();
     return view('offerings.edit', compact('establishments', 'offering'));
   }
 

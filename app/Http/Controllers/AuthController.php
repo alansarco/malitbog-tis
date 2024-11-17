@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Establishment;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
@@ -21,9 +22,23 @@ class AuthController extends Controller
   {
     $credentials = $request->only(['email', 'password']);
 
+    
     if (!Auth::attempt($credentials)) {
       return back()->withErrors([
         'email' => 'The provided credentials do not match our records.',
+      ])->onlyInput('email');
+    }
+    $checkifactive = User::where('email', $request->email)->first();
+
+    if($checkifactive->status == 'inactive') {      
+      return back()->withErrors([
+        'email' => 'Your account is not yet approved.',
+      ])->onlyInput('email');
+    }
+    $hasEstablishment = Establishment::where('user_id',$checkifactive->id)->first();
+    if(!$hasEstablishment && $checkifactive->role_id != '1') {      
+      return back()->withErrors([
+        'email' => 'Your account has no active establishment. Pease re-apply!',
       ])->onlyInput('email');
     }
 

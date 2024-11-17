@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Establishment;
 use App\Models\Offering;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class OfferController extends Controller
 {
   public function index()
   {
-    return view('owners.offers.index');
+    $establishments = Establishment::where('status', 'active')->where('user_id', Auth::user()->id)->get();
+    return view('owners.offers.index', compact('establishments'));
+
   }
 
   public function store(Request $request)
@@ -22,7 +26,7 @@ class OfferController extends Controller
     ]);
 
     $offer = Offering::create([
-      'establishment_id' => auth()->user()->establishment->id,
+      'establishment_id' => $request->establishment_owner,
       'name' => $request->name,
       'description' => $request->description,
       'price' => $request->price

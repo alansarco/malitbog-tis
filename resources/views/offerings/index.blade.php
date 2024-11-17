@@ -9,7 +9,7 @@
             Add
         </a>
     </div>
-    <div class="bg-white shadow rounded p-3">
+    <div class="bg-white shadow p-3 p-md-5 rounded-3">
         <livewire:table-refresher tableName='EstablishmentOfferingTable'>
             <livewire:establishment-offering-table />
         </livewire:table-refresher>

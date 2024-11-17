@@ -14,6 +14,21 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-6">
+                        <label class="form-label" for="establishment_owner">Establishment <small
+                                class="text-danger">*</small></label>
+                        <select class="select_mode form-select" name="establishment_owner">
+                            <option value="" disabled selected>Select one</option>
+                            @foreach ($establishments as $establishment)
+                                <option value="{{ $establishment->id }}" @if ($establishment->id == old('establishment_owner')) selected @endif>
+                                    {{ $establishment->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('establishment_owner')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="mb-6">
                         <label class="form-label" for="name">Name <small class="text-danger">*</small></label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Free Food"
                             value="{{ old('name') }}" />

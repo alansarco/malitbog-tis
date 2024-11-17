@@ -15,7 +15,7 @@ class EventController extends Controller
 
   public function create()
   {
-    $establishments = Establishment::get();
+    $establishments = Establishment::where('status', 'active')->get();
     return view('events.create', compact('establishments'));
   }
 
@@ -42,7 +42,7 @@ class EventController extends Controller
 
   public function edit(Event $event)
   {
-    $establishments = Establishment::get();
+    $establishments = Establishment::where('status', 'active')->get();
     return view('events.edit', compact('event', 'establishments'));
   }
 

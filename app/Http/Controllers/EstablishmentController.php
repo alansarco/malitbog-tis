@@ -24,8 +24,17 @@ class EstablishmentController extends Controller
   public function create()
   {
     $users = User::get();
+    // $users = User::leftJoin('establishments', 'users.id', '=', 'establishments.user_id')
+    // ->whereNull('establishments.user_id')
+    // ->select('users.*')
+    // ->get();
     $businessTypes = BusinessType::all();
     return view('establishments.create', compact('businessTypes', 'users'));
+  }
+
+  public function requests()
+  {
+    return view('requests.index');
   }
 
   public function store(Request $request)
