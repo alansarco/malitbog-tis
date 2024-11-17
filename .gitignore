@@ -6,16 +6,17 @@
 /public/storage
 /storage/*.key
 /vendor
-yarn.lock
-composer.lock
-package-lock.json
+# yarn.lock
+# composer.lock
+# package-lock.json
+# vite.config.js
+# package.json
 
 # .env
 .env.backup
 .env.production
 .phpunit.result.cache
-vite.config.js
-package.json
+
 
 docker-compose.override.yml
 
