@@ -12,7 +12,7 @@
 # vite.config.js
 # package.json
 
-# .env
+.env
 .env.backup
 .env.production
 .phpunit.result.cache
