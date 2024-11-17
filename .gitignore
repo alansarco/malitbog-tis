@@ -6,6 +6,9 @@
 /public/storage
 /storage/*.key
 /vendor
+yarn.lock
+composer.lock
+package-lock.json
 
 # .env
 .env.backup
