@@ -8,11 +8,11 @@
 
 
         <div class="row">
-            <section class="col-3">
-                <div id="map" style="height: 500px; width:300px"></div>
+            <section class="col-4">
+                <div id="map" style="height: 500px; width:100%"></div>
             </section>
 
-            <section class="col-4 text-center">
+            <section class="col-5 text-center">
                 <b>
                     <h5>Overview</h5>
                 </b>
