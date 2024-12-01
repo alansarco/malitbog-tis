@@ -97,10 +97,10 @@ final class EstablishmentEventTable extends PowerGridComponent
   public function actions(Event $row): array
   {
     return [
-      Button::add('edit')
-        ->slot('Edit')
-        ->class('btn btn-success btn-sm')
-        ->route('events.edit', ['event' => $row->id]),
+      // Button::add('edit')
+      //   ->slot('Edit')
+      //   ->class('btn btn-success btn-sm')
+      //   ->route('events.edit', ['event' => $row->id]),
 
       Button::add('delete')
         ->slot('Delete')

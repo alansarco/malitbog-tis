@@ -7,6 +7,7 @@ use App\Models\Establishment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class OwnerEstablishmentController extends Controller
 {
@@ -29,7 +30,7 @@ class OwnerEstablishmentController extends Controller
 
     try {
       // Create establishment
-      Establishment::create([
+      $establishment = Establishment::create([
         'user_id' => Auth::user()->id,
         'name' => $request->establishment_name,
         'description' => $request->establishment_description,
@@ -41,6 +42,10 @@ class OwnerEstablishmentController extends Controller
         'status' => 'inactive',
         'business_type_id' => $request->establishment_type_of_business,
       ]);
+      if ($request->has('image')) {
+        $path = Storage::put('/public/establishments', $request->image);
+        $establishment->update(['path' => $path]);
+      }
 
       return redirect(route('owners.establishment-index'))->with('success', 'Establishment owner and establishment created successfully.');
     } catch (\Exception $e) {

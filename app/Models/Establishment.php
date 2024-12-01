@@ -14,6 +14,7 @@ class Establishment extends Model
     'user_id',
     'name',
     'description',
+    'path',
     'address',
     'geolocation_longitude',
     'geolocation_latitude',

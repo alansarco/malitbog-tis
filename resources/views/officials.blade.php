@@ -4,76 +4,76 @@
 
 @section('content')
     <x-navbar />
-    <style>
-        .background-section {
-            background: linear-gradient(45deg, #1e90ff, #ff6347, #1e90ff);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            padding: 0;
-            position: relative;
-        }
-        .background-content {
-            padding: 0 2rem;
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-            position: relative;
-            z-index: 2;
-            background: rgba(255, 255, 255, 0.8);
-        }
-    </style>
-    <div class="container-fluid background-section">
-        <div class="background-content">
-            <h1 style="font-family: 'Charm', cursive; font-weight: 700; ">Municipal Tourism Office</h1>
-            <div class="row justify-content-center mt-5 pt-5 text-center">
-                <span class="fs-2 col-12">Organizational Structure</span>
-                <span class="col-5"></span>
-        
-                <div class="col-8 my-5">
-                    <div class="row gap-3 justify-content-center">
-                        
-                        <div class="col-lg-3 card rounded">
-                            <div class="card-body">
-                                <img src="https://i.mydramalist.com/rNgNLN_5f.jpg" alt="" height="80" width="80">
-                                <h5 class="card-title"></h5>
-                                <small class="card-subtitle">Laborer/Tourism Staff</small>
-                                <p class="card-text mt-3">
-                                    Name: Mr. Jason Bacalla
-                                </p>
+    <!-- Officials Start -->
+    <div class="container-fluid py-5">
+        <div class="container pt-5 pb-3">
+            <div class="text-center mb-3 pb-3">
+                <h6 class="text-warning text-uppercase" style="letter-spacing: 5px;">Officials</h6>
+                <h2 class="text-light-blue">Our Malitbog Officials</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-2">
+                    <div class="team-item bg-white mb-4">
+                        <div class="team-img position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="{{ asset('assets/img/images/team-1.jpg') }}" alt="">
+                            <div class="team-social">
+                                <a class="btn btn-outline-primary btn-square" href=""><i class="fab fa-facebook-f"></i></a>
                             </div>
                         </div>
-                        <div class="col-lg-3 card rounded">
-                            <div class="card-body">
-                                <img src="https://i.mydramalist.com/kEpQwc.jpg" alt="" height="80" width="80">
-                                <h5 class="card-title"></h5>
-                                <small class="card-subtitle">Municipal Mayor</small>
-                                <p class="card-text mt-3">Mr. Antonio S. Lura SR.</p>
+                        <div class="text-center py-4">
+                            <h5 class="text-truncate">Mr. Jason Bacalla</h5>
+                            <p class="m-0">Laborer/Tourism Staff</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-2">
+                    <div class="team-item bg-white mb-4">
+                        <div class="team-img position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="{{ asset('assets/img/images/team-2.jpg') }}" alt="">
+                            <div class="team-social">
+                                <a class="btn btn-outline-primary btn-square" href=""><i class="fab fa-facebook-f"></i></a>
                             </div>
                         </div>
-        
-                        <div class="col-lg-3 card rounded">
-                            <div class="card-body">
-                                <img src="https://i.mydramalist.com/eLBmQ_5c.jpg" alt="" height="80" width="80">
-                                <h5 class="card-title"></h5>
-                                <small class="card-subtitle">Job Order/Tourism Staff</small>
-                                <p class="card-text mt-3">Mr. Jesse Cabarrubias</p>
+                        <div class="text-center py-4">
+                            <h5 class="text-truncate">Mr. Antonio S. Lura Sr.</h5>
+                            <p class="m-0">Municipal Mayor</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-2">
+                    <div class="team-item bg-white mb-4">
+                        <div class="team-img position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="{{ asset('assets/img/images/team-3.jpg') }}" alt="">
+                            <div class="team-social">
+                                <a class="btn btn-outline-primary btn-square" href=""><i class="fab fa-facebook-f"></i></a>
                             </div>
                         </div>
-        
-                        <div class="col-lg-3 card rounded">
-                            <div class="card-body">
-                                <img src="https://i.mydramalist.com/kEpQwc.jpg" alt="" height="80" width="80">
-                                <h5 class="card-title"></h5>
-                                <small class="card-subtitle">Municipal Tourism Designate</small>
-                                <p class="card-text mt-3">Mr. Alrico M. Comajig</p>
+                        <div class="text-center py-4">
+                            <h5 class="text-truncate">Mr. Jesse Cabarrubias</h5>
+                            <p class="m-0">Job Order/Tourism Staff</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-2">
+                    <div class="team-item bg-white mb-4">
+                        <div class="team-img position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="{{ asset('assets/img/images/team-4.jpg') }}" alt="">
+                            <div class="team-social">
+                                <a class="btn btn-outline-primary btn-square" href=""><i class="fab fa-facebook-f"></i></a>
                             </div>
+                        </div>
+                        <div class="text-center py-4">
+                            <h5 class="text-truncate">Mr. Alrico M. Comajig</h5>
+                            <p class="m-0">Municipal Tourism Designate</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-</div>
+    </div>
+    <!-- Officials End -->
+    @include('footer')
+
 
 
 @endsection

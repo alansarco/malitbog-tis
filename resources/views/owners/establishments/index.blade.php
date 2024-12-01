@@ -5,7 +5,7 @@
 @section('content')
     <div class="row">
         <div class="col-xl">
-            <form method="POST" action="{{ route('owners.establishment-update') }}">
+            <form method="POST" action="{{ route('owners.establishment-update') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="d-flex justify-content-end mb-3">
                     <button type="submit" class="btn btn-primary d-flex gap-1">
@@ -24,6 +24,14 @@
                             <input type="text" class="form-control" id="establishment_name" name="establishment_name"
                                 placeholder="Starbucks" value="{{ old('establishment_name') }}" />
                             @error('establishment_name')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="image">Image</label>
+                            <input type="file" name="image" id="image" class="form-control"
+                                value="{{ old('image') }}" accept="image/*">
+                            @error('image')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>

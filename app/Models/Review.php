@@ -11,6 +11,7 @@ class Review extends Model
     'name',
     'description',
     'rate',
+    'ip_address',
   ];
 
   public function establishment()

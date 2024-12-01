@@ -116,10 +116,10 @@ final class EstablishmentOfferingTable extends PowerGridComponent
   {
     return [
 
-      Button::add('edit')
-        ->slot('Edit')
-        ->class('btn btn-success btn-sm')
-        ->route('offerings.edit', ['offering' => $row->id], '_blank'),
+      // Button::add('edit')
+      //   ->slot('Edit')
+      //   ->class('btn btn-success btn-sm')
+      //   ->route('offerings.edit', ['offering' => $row->id], '_blank'),
 
       Button::add('delete')
         ->slot('Delete')

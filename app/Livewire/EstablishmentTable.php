@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Enums\StatusEnum;
+use App\Enums\RoleEnum;
 use App\Models\Establishment;
 use App\Models\Event;
 use App\Models\Gallery;
@@ -133,10 +134,10 @@ final class EstablishmentTable extends PowerGridComponent
         ->class('btn btn-info btn-sm')
         ->route('establishments.show', ['establishment' => $row]),
 
-      Button::add('edit')
-        ->slot('Edit')
-        ->class('btn btn-success btn-sm')
-        ->route('establishments.edit', ['establishment' => $row->id], '_blank'),
+      // Button::add('edit')
+      //   ->slot('Edit')
+      //   ->class('btn btn-success btn-sm')
+      //   ->route('establishments.edit', ['establishment' => $row->id], '_blank'),
 
       Button::add('delete')
         ->slot('Delete')
@@ -148,17 +149,17 @@ final class EstablishmentTable extends PowerGridComponent
   
 
 
-  // public function actionRules($row): array
-  // {
-  //   return [
-  //     // Hide button edit for ID 1
-  //     Rule::button('edit')
-  //       ->when(fn($row) => $row->status === StatusEnum::INACTIVE->value)
-  //       ->hide(),
+  public function actionRules($row): array
+  {
+    return [
+      // Hide button edit for ID 1
+      // Rule::button('edit')
+      //   ->when(fn($row) => $row?->owner?->name  !== RoleEnum::ADMINS->value)
+      //   ->hide(),
 
-  //     Rule::button('delete')
-  //       ->when(fn($row) => $row->status === StatusEnum::INACTIVE->value)
-  //       ->hide(),
-  //   ];
-  // }
+      Rule::button('delete')
+        ->when(fn($row) => $row->status === StatusEnum::INACTIVE->value)
+        ->hide(),
+    ];
+  }
 }

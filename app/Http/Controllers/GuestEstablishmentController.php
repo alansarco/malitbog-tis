@@ -14,7 +14,20 @@ class GuestEstablishmentController extends Controller
     public function index(string $type)
     {
       $businessType = BusinessType::findOrFail($type);
-      return view('destinations', compact('businessType'));
+      $establishments = Establishment::leftJoin('users', 'establishments.user_id', '=', 'users.id')
+        ->select('establishments.*', 'users.name as owner')
+        ->where('establishments.status', 'active')
+        ->where('business_type_id', $businessType->id)->get();
+      return view('destinations', compact('businessType', 'establishments'));
+    }
+
+    public function welcome()
+    {
+      $establishments = Establishment::leftJoin('users', 'establishments.user_id', '=', 'users.id')
+        ->select('establishments.*', 'users.name as owner')
+        ->where('establishments.status', 'active')
+        ->get();
+      return view('welcome', compact('establishments'));
     }
 
     public function view(string $type, $id)

@@ -58,13 +58,13 @@
     }
 
     .navbar-toggler {
-      color: map-get($colors, color);
+      color: #fff;
       border-color: map-get($colors, border);
     }
 
     .navbar-toggler-icon {
       background-image: if(
-        map-get($colors, active-color) == #fff,
+        map-get($colors, active-color) == v
         $navbar-dark-toggler-icon-bg,
         $navbar-light-toggler-icon-bg
       );

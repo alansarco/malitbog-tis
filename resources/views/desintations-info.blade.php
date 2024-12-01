@@ -1,79 +1,109 @@
 @extends('layouts/blankLayout')
-
 @section('content')
     <x-navbar />
-
-    <div class="container d-flex flex-column justify-content-center mt-5 gap-5">
-        <h4 class="text-center">{{ $establishment->name }}</h4>
-
-
+    @if(session('error'))
+    <style>
+        /* Responsive styling for text */
+        p {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .indent {
+            text-indent: 2rem !important;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Error',
+                text: "You already rate this establishment!",
+                icon: 'error',
+            })
+            @php
+                session()->forget('error');
+            @endphp
+        });
+    </script>
+    @endif
+    <div class="container d-flex flex-column justify-content-center py-5 gap-5">
+        <h2 class="text-center text-warning">{{ $establishment->name }}</h4>
         <div class="row">
-            <section class="col-4">
+            <div class="col">
                 <div id="map" style="height: 500px; width:100%"></div>
-            </section>
-
-            <section class="col-5 text-center">
-                <b>
-                    <h5>Overview</h5>
-                </b>
-                <span>{{ $establishment->description }}</span>
-            </section>
-
-            <section class="col-3 overflow-auto d-flex flex-column gap-3" style="height: 900px;">
-                @forelse ($establishment->galleries as $gallery)
-                    <div class="card shadow rounded p-3">
-                        <img class="w-100" src="{{ App\Helpers\ImagePathHelper::normalizePath($gallery->path) }}">
-                    </div>
-                @empty
-                    <img src="https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg"
-                        alt="" class="w-100">
-                @endforelse
-            </section>
+            </div>
         </div>
+        <div class="row mt-3">
+            <div class="col-md-7">
+                <h3 class="text-primary">Overview</h3>
+                <p class="indent">{{ $establishment->description }}</p>
+            </div>
+            <div class="col-md-5">
+                <div class="row m-0">
+                    <h6 class="text-warning text-uppercase text-center" style="letter-spacing: 5px;">Galleries</h6>
 
-
-        <div class="row">
-            <section class="col-3">
-                <h5>Access:</h5>
-                <div class="d-flex flex-column gap-2">
-                    {{ $establishment->mode_of_access }}
+                        @forelse ($establishment->galleries as $gallery)
+                        <div class="col-6 bg-white p-0 m-0 border border-white">
+                            <img class="w-100 border border-white" src="{{ App\Helpers\ImagePathHelper::normalizePath($gallery->path) }}">
+                        </div>
+                        @empty
+                            <img src="https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg"
+                                alt="" class="w-100">
+                        @endforelse
                 </div>
-            </section>
-
-            <section class="col-4">
-                <b class="text-center">
-                    <h5>Accomodations:</h5>
-                </b>
-                <div class="d-flex flex-column gap-3 p-2 overflow-auto d-flex" style="height: 500px;">
-                    @forelse ($establishment->offerings as $offer)
-                        <div class="card shadow rounded p-1">
-                            <div class="card-header">
-                                {{ $offer->name }}
-                            </div>
-                            <div class="card-body">
-                                <section style="height: 300px;" class="overflow-auto">
-                                    {!! $offer->description !!}
-                                </section>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-center mb-3 pb-3">
+                            <h6 class="text-warning text-uppercase" style="letter-spacing: 5px;">Access</h6>
+                        <div class="d-flex flex-column gap-2 text-center">
+                            {{ $establishment->mode_of_access }}
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <div class="text-center mb-3 pb-3">
+                            <h6 class="text-warning text-uppercase" style="letter-spacing: 5px;">Offerings</h6>
+                        </div>
+                        <div class="d-flex" >
+                            <div class="row">
+                                @forelse ($establishment->offerings as $offer)
+                                <div class="col-12 mb-4">
+                                    <div class="package-item bg-white mb-2">
+                                        <img class="w-100" src="{{ App\Helpers\ImagePathHelper::normalizePath($offer->path) }}">
+                                        <div class="p-4">
+                                            {!! $offer->description !!}
+                                            <div class="border-top mt-4 pt-4">
+                                                <div class="d-flex justify-content-between">
+                                                    <h6 class="m-0"><i class="fa fa-map-pin text-primary mr-2"></i>{{ $offer->name }}</small></h6>
+                                                    <h5 class="m-0 text-primary">₱{{$offer->price}} </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @empty
+                                @endforelse
                             </div>
                         </div>
-                    @empty
-                    @endforelse
+                    </div>
                 </div>
-            </section>
-
-            <section class="col-3  flex-column gap-3">
-                <b class="text-center">
-                    <h5>Comments:</h5>
-                </b>
-                <div class="d-flex flex-column gap-3 p-2 overflow-auto d-flex" style="height: 500px;">
-                    <livewire:review establishmentId="{{ $establishment->id }}" />
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col">
+                        <h4 class="text-light-blue">Comments:</h4>
+                        <div class="d-flex flex-column gap-3 p-2 d-flex" >
+                            <livewire:review establishmentId="{{ $establishment->id }}" />
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </div>
         </div>
     </div>
-
-
-
+    @include('footer')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 

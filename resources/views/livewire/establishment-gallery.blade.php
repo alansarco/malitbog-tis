@@ -1,5 +1,5 @@
 <div>
-    <div class="d-flex flex-column justify-content-center mb-3">
+    {{-- <div class="d-flex flex-column justify-content-center mb-3">
         <div class="mb-6">
             <label class="form-label" for="name">Name <small class="text-danger">*</small></label>
             <input type="text" class="form-control" id="name" name="name" placeholder="Free Food"
@@ -22,7 +22,7 @@
                 Upload
             </button>
         </div>
-    </div>
+    </div> --}}
 
     <livewire:table-refresher tableName='EstablishmentGalleryTable'>
         <livewire:establishment-gallery-table :establishment=$establishment />

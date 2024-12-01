@@ -12,6 +12,15 @@ class OwnerGalleryController extends Controller
 {
   public function index()
   {
+    $establishmentselect = Establishment::leftJoin('users', 'establishments.user_id', '=', 'users.id')
+        ->where('establishments.user_id', '=', Auth::user()->id)
+        ->where('establishments.status', 'active')
+        ->select(
+            'establishments.*', // All columns from the galleries table
+            'establishments.name as establishment_name', // Alias establishment's name
+            'users.name as owner_name' // Alias user's name (owner of the establishment)
+        )->get();
+
     $establishments = Gallery::leftJoin('establishments', 'galleries.establishment_id', '=', 'establishments.id')
         ->leftJoin('users', 'establishments.user_id', '=', 'users.id')
         ->where('establishments.user_id', '=', Auth::user()->id)
@@ -21,7 +30,7 @@ class OwnerGalleryController extends Controller
             'establishments.name as establishment_name', // Alias establishment's name
             'users.name as owner_name' // Alias user's name (owner of the establishment)
         )->get();
-    return view('livewire.owner-gallery', compact('establishments'));
+    return view('livewire.owner-gallery', compact('establishments', 'establishmentselect'));
   }
 
   public function store(Request $request)

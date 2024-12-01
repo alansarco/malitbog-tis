@@ -10,11 +10,11 @@
             @csrf
             <div class="d-flex flex-column justify-content-center mb-3">
                 <div class="mb-6">
-                    <label class="form-label" for="establishment_name">Owner <small
+                    <label class="form-label" for="establishment_name">Establishment <small
                             class="text-danger">*</small></label>
                     <select class="select_mode form-select" name="establishment_name">
                         <option value="" disabled selected>Select one</option>
-                        @foreach ($establishments as $establishment)
+                        @foreach ($establishmentselect as $establishment)
                             <option value="{{ $establishment->id }}" @if ($establishment->id == old('establishment_name')) selected @endif>
                                 {{ $establishment->name }}
                             </option>
@@ -121,7 +121,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             Swal.fire({
                 title: 'Success',
-                text: "Account and its establishment has been added!",
+                text: "Gallery has been added!",
                 icon: 'success',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'OK',

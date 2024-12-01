@@ -85,7 +85,6 @@
       height: 400px;          /* Set a specific height for the carousel */
       margin: 0;              /* Remove any margin */
       overflow: hidden;       /* Hides overflow content */
-      border: 1px solid #ccc; /* Light border */
       border-radius: 0px;     /* Remove rounded corners */
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
     }
@@ -183,7 +182,7 @@
     .scroll-down-button:hover {
       transform: translateX(-50%) translateY(5px); /* Slightly lower the button on hover */
       color: #ffffff;
-      background: linear-gradient(45deg, #ff6347, #1e90ff);
+      background: #005b96;
       border: none;
     }
 
@@ -241,37 +240,58 @@
             </h1>
           </div>
       </div>
-      <a href="#next-section" class="d-none d-lg-block scroll-down-button rounded-pill px-5 pt-3 pb-5">
-        <span>GET START ↓</span>
+      <a href="#next-section" class="d-none d-lg-block scroll-down-button rounded-pill px-3 pt-2 pb-3">
+        <span>GET START  <i class="bx bx-chevron-down text-white"></i></span>
       </a>
     </div>
-
-    <div id="next-section" class="container-fluid row justify-content-center align-items-center " 
-     style="background: linear-gradient(45deg, #1e8fffcc, #ff6347cc, #1e8fffcc); animation: gradientAnimation 6s ease infinite; width: 100%; margin: 0;">
-      <div class="container-fluid pink-bg col-lg-8 row justify-content-start align-items-center mb-5">
-        <div class="col-lg-7 vision-mission-box">
-            <h5 class="text-dark text-center fw-bold">VISION</h5>
-            <p class="text-dark text-center">
-                A CENTER OF ARTS AND CULTURE IN THE PROVINCE OF SOUTHERN LEYTE, WITH A PROGRESSIVE SUSTAINABLE, AND
-                DIVERSE ECONOMY, DISASTER-RESILIENT COMMUNITY, STRENGTHENED SOCIAL ORGANIZATIONS AND EMPOWERED CITIZENRY
-                LIVING IN AN ECOLOGICALLY BALANCED, SAFE, PEACEFUL AND ATTRACTIVE ENVIRONMENT WITH A COMPETENT, TRANSPARENT,
-                ACCOUNTABLE AND RESPONSIVE GOVERNANCE.
-            </p>
-        </div>
-      </div>
-      <div class="container-fluid col-lg-8 row justify-content-end align-items-center my-5">
-        <div class="col-lg-7 vision-mission-box">
-          <h5 class="text-dark text-center fw-bold">MISSION</h5>
-          <p class="text-dark text-center">
-            THE MUNICIPALITY WILL PROVIDE A HOLISTIC AND SUSTAINABLE SOCIO-ECONOMIC PROGRAMS AND SOCIAL SERVICES THAT
-            WILL CONTRIBUTE TO THE IMPROVEMENT OF THE QUALITY OF LIFE OF ITS CONSTITUENCY, PROMOTE CONCERNS FOR AN
-            ECOLOGICALLY BALANCED THROUGH PRESERVATION AND CONSERVATION, ENFORCE PEACE AND ORDER FOR A JUST AND HUMANE
-            SOCIAL ORDER AND NURTURE PEOPLE EMPOWERMENT THROUGH STRENGTHENED SOCIAL ORGANIZATION UNDER EFFICIENT
-            QUALITY LEADERSHIP.
-          </p>
-        </div>
+    <!-- Mission Vision Start -->
+    <div class="container-fluid py-5" id="next-section">
+      <div class="container pt-5 pb-3">
+          <div class="text-center mb-3 pb-3">
+              <h6 class="text-warning text-uppercase" style="letter-spacing: 5px;">MISSION & VISION</h6>
+          </div>
+          <div class="row d-flex">
+              <div class="col-lg-6 col-md-6 mb-4 d-flex align-items-stretch">
+                  <div class="service-item bg-white text-center mb-2 py-5 px-4">
+                      <i class="fa fa-2x fa-lightbulb mx-auto mb-4"></i>
+                      <h5 class="mb-2">VISION</h5>
+                      <p class="m-0">A center of arts and culture in the province of southern leyte, with a progressive, sustainable, and diverse economy, a disaster-resilient community, strengthened social organizations, and empowered citizenry living in an ecologically balanced, safe, peaceful, and attractive environment with competent, transparent, accountable, and responsive governance.</p>
+                  </div>
+              </div>
+              <div class="col-lg-6 col-md-6 mb-4 d-flex align-items-stretch">
+                  <div class="service-item bg-white text-center mb-2 py-5 px-4">
+                      <i class="fa fa-2x fa-fire mx-auto mb-4"></i>
+                      <h5 class="mb-2">MISSION</h5>
+                      <p class="m-0">The municipality will provide holistic and sustainable socio-economic programs and social services that contribute to improving the quality of life for its constituents, promote ecological balance through preservation and conservation, enforce peace and order for a just and humane society, and nurture people empowerment through strengthened social organizations under efficient and quality leadership.</p>
+                  </div>
+              </div>
+          </div>
       </div>
     </div>
+    <!-- Mission Vision End -->
+    <!-- Destination Start -->
+    <div class="container-fluid py-5">
+      <div class="container pt-5 pb-3">
+          <div class="text-center mb-3 pb-3">
+              <h6 class="text-warning text-uppercase " style="letter-spacing: 5px;">Destination</h6>
+              <h2 class="text-light-blue">Explore Top Destination</h2>
+          </div>
+          <div class="row">
+              @foreach ($establishments as $establishment)
+              <div class="col-lg-4 col-md-6 mb-4">
+                  <div class="destination-item position-relative overflow-hidden mb-2">
+                    <img class="img-fluid" src="{{asset('assets/img/images/destination-2.jpg')}}" alt="">
+                      <a class="destination-overlay text-white text-decoration-none" href="{{ route('guests.destinations.show', ['type' => $establishment->business_type_id, 'id' => $establishment->id]) }}">
+                          <h5 class="text-white"> {{$establishment->name}} </h5>
+                          <span>{{$establishment->owner}}</span>
+                      </a>
+                  </div>
+              </div>
+              @endforeach
+          </div>
+      </div>
+    </div>
+    <!-- Destination Start -->
     <div class="carousel-container">
       <div class="carousel-slide">
         <img src="https://southernleyte.gov.ph/wp-content/uploads/Kaplag-Uli-1.2.jpg" alt="Slide 1">
@@ -285,6 +305,7 @@
       <div class="prev" onclick="moveSlide(-1)">&#10094;</div>
       <div class="next" onclick="moveSlide(1)">&#10095;</div>
     </div>
+    @include('footer')
 
     <script>
       let slideIndex = 0;

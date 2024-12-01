@@ -1,17 +1,17 @@
 <div>
     @forelse ($reviews as $review)
-        <div class="card shadow rounded p-1">
-            <div class="card-header d-flex">
+        <div class="text-white  mb-2 rounded">
+            <div class="bg-primary d-flex p-2 rounded">
                 <div class="d-flex flex-column">
                     {{ $review->name }}
-                    <span><i class="bx bx-star"></i>{{ $review->rate }}</span>
+                    <span class="text-warning d-flex"><i class="bx bx-star text-warning"></i>{{ $review->rate }}</span>
                 </div>
                 <small class="ms-auto">{{ $review->created_at->format('Y-m-d') }}</small>
             </div>
-            <div class="card-body">
-                <section style="height: 80px;" class="overflow-auto">
+            <div class="p-2">
+                <p class="overflow-auto font-italic text-primary">
                     {{ $review->description }}
-                </section>
+                </p>
             </div>
         </div>
     @empty
@@ -44,7 +44,7 @@
                 @enderror
             </div>
 
-            <button class="btn btn-primary" wire:click="saveEvent">Save</button>
+            <button class="btn btn-primary" wire:click="saveReview">Save</button>
         </div>
     </div>
 </div>

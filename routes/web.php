@@ -19,7 +19,7 @@ use App\Http\Controllers\RequestController;
 
 // New Routes
 Route::middleware('guest')->group(function () {
-  Route::get('/', fn() => view('welcome'))->name('root');
+  // Route::get('/', fn() => view('welcome'))->name('root');
   Route::get('/history', fn() => view('history'))->name('history');
   Route::get('/officials', fn() => view('officials'))->name('officials');
   Route::get('/news-and-events', [NewsEventController::class, 'index'])->name('news-events');
@@ -27,6 +27,7 @@ Route::middleware('guest')->group(function () {
   Route::get('/destinations/{type}', [GuestEstablishmentController::class, 'index'])->name('guests.destinations.index');
   Route::get('/destinations/{type}/{id}', [GuestEstablishmentController::class, 'view'])->name('guests.destinations.show');
   Route::get('/apply', [GuestEstablishmentController::class, 'apply'])->name('apply');
+  Route::get('/', [GuestEstablishmentController::class, 'welcome'])->name('root');
   Route::post('/apply', [GuestEstablishmentController::class, 'store'])->name('apply.store');
 
   Route::controller(AuthController::class)->group(function () {
