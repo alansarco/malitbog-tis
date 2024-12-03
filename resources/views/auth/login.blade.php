@@ -59,7 +59,7 @@
             <div class="authentication-inner bg-white ">
                 <!-- Register -->
                 <!-- Back Button -->
-                <div class="mb-6 text-right padding-1rm">
+                <div class="mb-6 text-right padding-1rm d-flex">
                     <a href="/" class="btn btn-secondary">
                         <
                     </a>

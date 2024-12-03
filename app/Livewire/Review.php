@@ -19,7 +19,7 @@ class Review extends Component
     $this->validate([
       'name' => 'required',
       'description' => 'required',
-      'rate' => 'required',
+      'rate' => 'required|numeric|integer|min:1|max:5',
     ]);
     // Get the IP address of the user
     $this->ipAddress = Request::ip(); 
@@ -34,6 +34,7 @@ class Review extends Component
     ->select('establishments.business_type_id')
     ->where('establishment_id', $this->establishmentId) // Compare IP address
     ->first();
+    
 
     if ($existingReview) {
       return redirect('/destinations'.'/'.$business_type->business_type_id.'/'.$this->establishmentId)->with('error', 'You have already reviewed this establishment from this IP address.');

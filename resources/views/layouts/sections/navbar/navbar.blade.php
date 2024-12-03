@@ -26,18 +26,16 @@
     </div>
 @endif
 
-<!-- ! Not required for layout-without-menu -->
-@if (!isset($navbarHideToggle))
+<div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+    <!-- ! Not required for layout-without-menu -->
+    @if (!isset($navbarHideToggle))
     <div
-        class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0{{ isset($menuHorizontal) ? ' d-xl-none ' : '' }} {{ isset($contentNavbar) ? ' d-xl-none ' : '' }}">
+        class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 {{ isset($menuHorizontal) ? ' d-xl-none ' : '' }} {{ isset($contentNavbar) ? ' d-xl-none ' : '' }}">
         <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
             <i class="bx bx-menu bx-md"></i>
         </a>
     </div>
-@endif
-
-
-<div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+    @endif
     <h5 class="my-auto text-uppercase">Malitbog Tourism Office </h5>
     <ul class="navbar-nav flex-row align-items-center ms-auto">
 

@@ -117,7 +117,7 @@
                                 <label class="form-label" for="establishment_mode_of_access">Mode Of Access <small
                                         class="text-danger">*</small></label>
                                 <select class="select_mode form-select" name="establishment_mode_of_access[]"
-                                    multiple="multiple">
+                                    >
                                     <option value="Car Access" @if (in_array('Car Access', old('establishment_mode_of_access') ?? [])) selected @endif>Car Access
                                     </option>
                                     <option value="Foot Access" @if (in_array('Foot Access', old('establishment_mode_of_access') ?? [])) selected @endif>Foot Access
@@ -152,3 +152,12 @@
     
 
 @endsection
+
+@section('jsScripts')
+    <script>
+        $(document).ready(function() {
+            $('.select_mode').select2();
+        });
+    </script>
+@endsection
+

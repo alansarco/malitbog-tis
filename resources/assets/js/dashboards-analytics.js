@@ -476,13 +476,16 @@
     statisticsChart.render();
   }
 
+  // Retrieve data from the global variable
+  const incomeData = window.incomeChartData || [0]; // Default to [0] if undefined
+  console.log("incomeData", incomeData);
   // Income Chart - Area chart
   // --------------------------------------------------------------------
   const incomeChartEl = document.querySelector('#incomeChart'),
     incomeChartConfig = {
       series: [
         {
-          data: [21, 30, 22, 42, 26, 35, 29]
+          data: [21, 30, 22, 42, 26, 35, 100]
         }
       ],
       chart: {
