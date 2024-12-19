@@ -57,7 +57,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('news', NewsController::class);
 
     // Route::get('requests', [EstablishmentController::class, 'requests'])->name('requests');
-    Route::get('/requests/{request}', [RequestController::class, 'show'])->name('requests.show');
   });
 
   Route::middleware('role:owner')->group(function () {

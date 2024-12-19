@@ -54,7 +54,8 @@ class GuestEstablishmentController extends Controller
         'establishment_address' => 'required|string|max:255',
         'establishment_contact_number' => 'required|string|max:20',
         'establishment_mode_of_access' => 'required',
-        'establishment_type_of_business' => 'required|exists:business_types,id'
+        'establishment_type_of_business' => 'required|exists:business_types,id',
+        'documents' => 'required|mimes:pdf,zip,doc,docx|max:5120',
       ]);
       
       $role = Role::whereNot('name', 'admin')->first();
@@ -88,13 +89,17 @@ class GuestEstablishmentController extends Controller
           $establishment->update(['path' => $path]);
         }
 
+        // Handle documents upload
+        if ($request->hasFile('documents')) {
+          $documentsPath = $request->file('documents')->store('public/documents');
+          $establishment->update(['documents' => $documentsPath]);
+        }
+
         session(['success' => 'Establishment owner and establishment created successfully.']);
         return redirect(route('login'));
       } catch (\Exception $e) {
         session(['error' => 'Establishment owner and establishment created successfully.']);
         return redirect(route('login'));
-
-
       }
     }
 }

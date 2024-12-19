@@ -280,7 +280,11 @@
               @foreach ($establishments as $establishment)
               <div class="col-lg-4 col-md-6 mb-4">
                   <div class="destination-item position-relative overflow-hidden mb-2">
-                    <img class="img-fluid" src="{{asset('assets/img/images/destination-2.jpg')}}" alt="">
+                    @php
+                      // Replace 'public' with '/storage' in the file path
+                      $downloadPath = str_replace('public', '/storage', $establishment->path);
+                    @endphp
+                    <img class="img-fluid" src="{{ $downloadPath }}" alt="">
                       <a class="destination-overlay text-white text-decoration-none" href="{{ route('guests.destinations.show', ['type' => $establishment->business_type_id, 'id' => $establishment->id]) }}">
                           <h5 class="text-white"> {{$establishment->name}} </h5>
                           <span>{{$establishment->owner}}</span>

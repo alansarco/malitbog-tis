@@ -15,6 +15,7 @@ class Establishment extends Model
     'name',
     'description',
     'path',
+    'documents',
     'address',
     'geolocation_longitude',
     'geolocation_latitude',

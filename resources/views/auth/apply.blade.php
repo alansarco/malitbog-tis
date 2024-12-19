@@ -80,6 +80,15 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
+
+                            <div class="mb-6">
+                                <label class="form-label" for="documents">BIR documents</label>
+                                <input type="file" name="documents" id="documents" class="form-control"
+                                    value="{{ old('documents') }}" accept=".pdf,.zip,.doc,.docx">
+                                @error('documents')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
                             <div class="mb-6">
                                 <label class="form-label" for="establishment_description">Description <small
                                         class="text-danger">*</small></label>

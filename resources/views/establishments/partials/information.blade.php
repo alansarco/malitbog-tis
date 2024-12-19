@@ -33,3 +33,19 @@
     <span>Business Type</span>
     <h5>{{ $establishment->businessType->name }}</h5>
 </div>
+
+<div class="d-flex">
+    <span>BIR Documents</span>
+</div>
+
+@if ($establishment->documents)
+@php
+    // Replace 'public' with '/storage' in the file path
+    $downloadPath = str_replace('public', '/storage', $establishment->documents);
+@endphp
+<a href="{{ $downloadPath }}" class="btn btn-primary mt-2" download>
+    Download BIR Requirements
+</a>
+@else
+<span class="text-muted">No document available</span>
+@endif

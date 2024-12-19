@@ -181,11 +181,12 @@ final class RequestTable extends PowerGridComponent
 
   public function actions(Establishment $row): array
   {
+    $f ='';
     return [
-    //   Button::add('view')
-    //     ->slot('View')
-    //     ->class('btn btn-info btn-sm')
-    //     ->route('establishments.show', ['establishment' => $row]),
+      Button::add('view')
+        ->slot('View')
+        ->class('btn btn-success btn-sm')
+        ->route('establishments.show', ['establishment' => $row]),
 
       Button::add('edit')
         ->slot('Approve')
