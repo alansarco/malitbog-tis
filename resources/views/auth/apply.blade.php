@@ -121,6 +121,11 @@
                                     name="establishment_geolocation_latitude" placeholder="10.158163827849396"
                                     value="{{ old('establishment_geolocation_latitude') }}" />
                             </div>
+                            <!-- Map container -->
+                            <div class="mb-6">
+                                <label class="form-label">Select Location on Map</label>
+                                <div id="map" style="height: 400px;"></div>
+                            </div>
                             <div class="mb-6">
                                 <label class="form-label" for="establishment_contact_number">Contact Number <small
                                         class="text-danger">*</small></label>
@@ -166,7 +171,41 @@
             </div>
         </div>    
     </div>
-    
+    <!-- Include Leaflet CSS and JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize the map
+            var map = L.map('map').setView([10.158163827849396, 125.00094211920187], 13); // Default coordinates
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+            }).addTo(map);
+
+            // Add a marker
+            var marker = L.marker([10.158163827849396, 125.00094211920187], { draggable: true }).addTo(map);
+
+            // Update inputs on marker drag
+            marker.on('dragend', function (event) {
+                var position = marker.getLatLng();
+                document.getElementById('establishment_geolocation_latitude').value = position.lat;
+                document.getElementById('establishment_geolocation_longitude').value = position.lng;
+            });
+
+            // Update marker and inputs on map click
+            map.on('click', function (event) {
+                var lat = event.latlng.lat; // No toFixed, retains full precision
+                var lng = event.latlng.lng;
+                document.getElementById('establishment_geolocation_latitude').value = lat;
+                document.getElementById('establishment_geolocation_longitude').value = lng;
+
+                marker.setLatLng([lat, lng]);
+            });
+        });
+    </script>
 
 @endsection
 

@@ -1,6 +1,5 @@
 @extends('layouts/blankLayout')
 @section('content')
-    <x-navbar />
     @if(session('error'))
     <style>
         /* Responsive styling for text */
@@ -114,14 +113,13 @@
                     <div class="col">
                         <p class="text-light-blue text-lg font-weight-bold mb-0">COMMENTS:</p>
                         <div class="d-flex flex-column gap-3 p-2 d-flex" >
-                            <livewire:review establishmentId="{{ $establishment->id }}" />
+                            <livewire:reviews establishmentId="{{ $establishment->id }}" />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @include('footer')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 

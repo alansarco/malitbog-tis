@@ -3,11 +3,11 @@
 @section('title', 'User Accounts')
 
 @section('content')
-    <div class="d-flex justify-content-end">
-        <a href="{{ route('accounts.create') }}" class="btn btn-primary rounded my-2 py-2 d-flex gap-2">
+    <div class="d-flex justify-content-end my-2 py-2">
+        {{-- <a href="{{ route('accounts.create') }}" class="btn btn-primary rounded my-2 py-2 d-flex gap-2">
             <i class="bx bx-user-plus"></i>
             Add
-        </a>
+        </a> --}}
     </div>
     <div class="bg-white shadow p-3 p-md-5 rounded-3">
         <livewire:user-table />
@@ -109,7 +109,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             Swal.fire({
                 title: 'Success',
-                text: "Account and its establishment has been updated!",
+                text: "Account has been updated!",
                 icon: 'success',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'OK',

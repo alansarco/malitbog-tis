@@ -8,7 +8,6 @@
       <div class="text-center mb-3 pb-3">
         <h6 class="text-warning text-uppercase" style="letter-spacing: 5px;">Establishment</h6>
         <h2 class="text-center text-light-blue">{{ $businessType->name }}</h2>
-        {{$myname}}
       </div>
 
       {{-- <div class="card shadow p-4">

@@ -39,4 +39,13 @@ class DashboardController extends Controller
 
     return view('dashboard.index', compact('user', 'owners', 'establishments', 'galleries', 'offerings', 'news', 'events', 'growth'));
   }
+  
+  public function dashboard_owner()
+  {
+    $user = Auth::user();
+    $establishments = Establishment::leftJoin('users', 'establishments.user_id', 'users.id')
+      ->select('establishments.*', 'users.name as owner')
+      ->where('establishments.status', 'active')->where('establishments.user_id', $user->id)->get();
+    return view('dashboard.owner', compact('user', 'establishments'));
+  }
 }

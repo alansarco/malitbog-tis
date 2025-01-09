@@ -19,8 +19,7 @@ class GuestEstablishmentController extends Controller
         ->select('establishments.*', 'users.name as owner')
         ->where('establishments.status', 'active')
         ->where('business_type_id', $businessType->id)->get();
-        $myname = "Joyce";
-      return view('destinations', compact('businessType', 'establishments', 'myname'));
+      return view('destinations', compact('businessType', 'establishments'));
     }
 
     public function welcome()
@@ -77,8 +76,8 @@ class GuestEstablishmentController extends Controller
           'description' => $request->establishment_description,
           'address' => $request->establishment_address,
           'mode_of_access' => implode(', ', $request->establishment_mode_of_access),
-          'geolocation_longitude' => $request->establishment_geolocation_latitude,
-          'geolocation_latitude' => $request->establishment_geolocation_longitude,
+          'geolocation_latitude' => $request->establishment_geolocation_latitude,
+          'geolocation_longitude' => $request->establishment_geolocation_longitude,
           'contact_number' => $request->establishment_contact_number,
           'business_type_id' => $request->establishment_type_of_business,
           'status' => 'inactive',

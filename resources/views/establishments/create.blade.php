@@ -1,6 +1,6 @@
 @extends('layouts/layoutWithScript')
 
-@section('title', 'Register Establishment')
+@section('title', 'User Accounts - Create')
 
 @section('content')
     <div class="row">
@@ -18,38 +18,56 @@
                             Back
                         </a>
                     </button>
+                    
+                </div>
+                <div class="card mb-6">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Account Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-6">
+                            <label class="form-label" for="name">Full Name <small class="text-danger">*</small> </label>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="John Doe"
+                                value="{{ old('name') }}" />
+                            @error('name')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="email">Email <small class="text-danger">*</small></label>
+                            <div class="input-group input-group-merge">
+                                <input type="text" id="email" class="form-control" name="email"
+                                    placeholder="john.doe@gmail.com" aria-label="john.doe" aria-describedby="email2"
+                                    value="{{ old('email') }}" />
+                            </div>
+                            <div class="form-text"> You can use letters, numbers & periods </div>
+                            @error('email')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="password">Password <small class="text-danger">*</small></label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="*****" />
+                            <div class="form-text"> Password must be 8 characters length </div>
+                            @error('password')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="password_confirmation">Confirm Password <small
+                                    class="text-danger">*</small></label>
+                            <input type="password" class="form-control" id="password_confirmation"
+                                name="password_confirmation" placeholder="*****" />
+                            <div class="form-text"> Password must be 8 characters length </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card mb-6">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">Establishment Information</h5>
                     </div>
                     <div class="card-body">
-                        <div class="mb-6">
-                            <label class="form-label" for="establishment_owner">Owner <small
-                                    class="text-danger">*</small></label>
-                            <select class="select_mode form-select" name="establishment_owner">
-                                <option value="" disabled selected>Select one</option>
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}" @if ($user->id == old('establishment_owner')) selected @endif>
-                                        {{ $user->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('establishment_owner')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                        
-                        <div class="mb-6">
-                            <label class="form-label" for="image">Image<small
-                                class="text-danger">*</small></label>
-                            <input type="file" name="image" id="image" class="form-control"
-                                value="{{ old('image') }}" accept="image/*">
-                            @error('image')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                        
                         <div class="mb-6">
                             <label class="form-label" for="establishment_name">Name <small
                                     class="text-danger">*</small></label>
@@ -65,6 +83,15 @@
                             <textarea id="establishment_description" class="form-control" name="establishment_description"
                                 placeholder="Short Information About the establishmment">{{ old('establishment_description') }}</textarea>
                             @error('establishment_description')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="image">Image<small
+                                class="text-danger">*</small></label>
+                            <input type="file" name="image" id="image" class="form-control"
+                                value="{{ old('image') }}" accept="image/*">
+                            @error('image')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
@@ -94,9 +121,8 @@
                         <div class="mb-6">
                             <label class="form-label" for="establishment_contact_number">Contact Number <small
                                     class="text-danger">*</small></label>
-                            <input type="text" class="form-control" id="establishment_contact_number"
-                                name="establishment_contact_number" placeholder="+6391234567890"
-                                value="{{ old('establishment_contact_number') }}" />
+                            <input type="text" class="form-control" id="establishment_contact_number" name="establishment_contact_number"
+                                placeholder="+6391234567890" value="{{ old('establishment_contact_number') }}" />
                             @error('establishment_contact_number')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror

@@ -5,7 +5,14 @@
       "name": "Dashboard",
       "icon": "menu-icon tf-icons bx bx-home-smile",
       "slug": "dashboard",
-      "permission": ["admin", "owner"]
+      "permission": ["admin"]
+    },
+    {
+      "url": "/dashboard-owner",
+      "name": "Dashboard",
+      "icon": "menu-icon tf-icons bx bx-home-smile",
+      "slug": "dashboard",
+      "permission": ["owner"]
     },
     {
       "name": "User Accounts",
@@ -17,11 +24,6 @@
           "url": "/accounts",
           "name": "List of Accounts",
           "slug": "accounts.index"
-        },
-        {
-          "url": "/accounts/create",
-          "name": "Create Account",
-          "slug": "accounts.create"
         }
       ]
     },

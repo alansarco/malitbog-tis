@@ -43,7 +43,10 @@ class AuthController extends Controller
     }
 
     $request->session()->regenerate();
-    return redirect()->intended('/dashboard');
+    if($checkifactive->role_id == 1) {
+      return redirect()->intended('/dashboard');
+    }
+    return redirect()->intended('/dashboard-owner');
   }
 
   public function logout(Request $request)

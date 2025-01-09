@@ -8997,3 +8997,11 @@ h6,
   padding: 0;
   list-style-type: none;
 }
+
+.text-xs {
+  font-size: 0.9rem !important;
+}
+
+.text-xxs {
+  font-size: 0.8rem !important;
+}

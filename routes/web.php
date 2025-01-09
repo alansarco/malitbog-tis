@@ -42,14 +42,12 @@ Route::middleware('guest')->group(function () {
 
 
 Route::middleware('auth')->group(function () {
-  Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
   Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-
+  Route::resource('establishments', EstablishmentController::class);
 
   Route::middleware('role:admin')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('accounts', AccountController::class);
-    Route::resource('establishments', EstablishmentController::class);
     Route::resource('requests', RequestController::class);
     Route::resource('business-types', BusinessTypeController::class);
     Route::resource('events', EventController::class);
@@ -60,6 +58,8 @@ Route::middleware('auth')->group(function () {
   });
 
   Route::middleware('role:owner')->group(function () {
+    Route::get('/dashboard-owner', [DashboardController::class, 'dashboard_owner'])->name('dashboard');
+    Route::get('/dashboard-owner/{id}', [OwnerEstablishmentController::class, 'view'])->name('owner.destinations.view');
     Route::get('/my-establishment', [OwnerEstablishmentController::class, 'index'])->name('owners.establishment-index');
     Route::post('/my-establishment', [OwnerEstablishmentController::class, 'update'])->name('owners.establishment-update');
 

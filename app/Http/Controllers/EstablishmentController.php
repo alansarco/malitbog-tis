@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AccountStoreRequest;
 use App\Models\BusinessType;
 use App\Models\Establishment;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -38,7 +40,7 @@ class EstablishmentController extends Controller
     return view('requests.index');
   }
 
-  public function store(Request $request)
+  public function store(AccountStoreRequest $request)
   {
     // Validate input
     $request->validate([
@@ -51,9 +53,18 @@ class EstablishmentController extends Controller
     ]);
 
     try {
+      $role = Role::whereNot('name', 'admin')->first();
+      // Create a new user
+      $user = User::create([
+        'role_id' => $role->id,
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+      ]);
+
       // Create establishment
       $establishment = Establishment::create([
-        'user_id' => $request->establishment_owner,
+        'user_id' => $user->id,
         'name' => $request->establishment_name,
         'description' => $request->establishment_description,
         'address' => $request->establishment_address,
@@ -122,6 +133,6 @@ class EstablishmentController extends Controller
       ]);
     }
 
-    return redirect('/establishments')->with('update', 'Account updated successfully.');
+    return redirect('/my-establishment')->with('update', 'Account updated successfully.');
   }
 }

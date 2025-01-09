@@ -36,8 +36,8 @@ class OwnerEstablishmentController extends Controller
         'description' => $request->establishment_description,
         'address' => $request->establishment_address,
         'mode_of_access' => implode(', ', $request->establishment_mode_of_access),
-        'geolocation_longitude' => $request->establishment_geolocation_latitude,
-        'geolocation_latitude' => $request->establishment_geolocation_longitude,
+        'geolocation_latitude' => $request->establishment_geolocation_latitude,
+        'geolocation_longitude' => $request->establishment_geolocation_longitude,
         'contact_number' => $request->establishment_contact_number,
         'status' => 'inactive',
         'business_type_id' => $request->establishment_type_of_business,
@@ -52,4 +52,10 @@ class OwnerEstablishmentController extends Controller
       return back()->with('error', 'Error creating establishment: ' . $e->getMessage());
     }
   }
+
+  public function view(string $id)
+    {
+      $establishment = Establishment::findOrFail($id);
+      return view('owners.establishments.establishment-info', compact('establishment'));
+    }
 }

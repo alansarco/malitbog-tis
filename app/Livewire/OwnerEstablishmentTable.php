@@ -131,7 +131,12 @@ final class OwnerEstablishmentTable extends PowerGridComponent
       Button::add('delete')
         ->slot('Delete')
         ->class('btn btn-danger btn-sm')
-        ->dispatch('confirmDeleteEstablishment', ['rowId' => $row->id])
+        ->dispatch('confirmDeleteEstablishment', ['rowId' => $row->id]),
+
+      Button::add('edit')
+      ->slot('Edit')
+      ->class('btn btn-success btn-sm')
+      ->route('establishments.edit', ['establishment' => $row->id], '_blank')
         
     ];
   }
